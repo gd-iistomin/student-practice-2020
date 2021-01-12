@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="085254f7-ed27-4d59-9c7b-0c6685726bed" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/kkramarenko/ecommerceapp/config/SpringSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kkramarenko/ecommerceapp/controller/OrderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kkramarenko/ecommerceapp/repository/OrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kkramarenko/ecommerceapp/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/db/changelog/db.changelog-master.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/angular-ecommerce/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/angular-ecommerce/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/angular-ecommerce/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/angular-ecommerce/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/angular-ecommerce/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/angular-ecommerce/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +23,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -66,17 +69,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SpringBootEcommerceAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="spring-boot-ecommerce-app" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="kkramarenko.ecommerceapp.SpringBootEcommerceAppApplication" />
@@ -104,7 +96,10 @@
       <workItem from="1609154652926" duration="3904000" />
       <workItem from="1609244236965" duration="10000" />
       <workItem from="1609244278224" duration="11000" />
-      <workItem from="1609244317381" duration="1069000" />
+      <workItem from="1609244317381" duration="5297000" />
+      <workItem from="1610353492528" duration="846000" />
+      <workItem from="1610357629897" duration="4597000" />
+      <workItem from="1610446862433" duration="6130000" />
     </task>
     <servers />
   </component>
