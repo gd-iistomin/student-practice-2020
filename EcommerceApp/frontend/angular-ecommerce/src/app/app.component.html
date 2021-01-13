@@ -23,7 +23,15 @@
 
             <app-search></app-search>
 
-            <app-login-button></app-login-button>
+            <!-- Show greeting and "Check my orders" buttons only if user is authenticated -->
+            <div [hidden]="!authenticated()">
+              <app-user-status></app-user-status>
+            </div>
+
+            <!-- Hide login button if user is authenticated -->
+            <div [hidden]="authenticated()">
+              <app-login-button></app-login-button>
+            </div>
             
             <app-cart-status></app-cart-status>
 

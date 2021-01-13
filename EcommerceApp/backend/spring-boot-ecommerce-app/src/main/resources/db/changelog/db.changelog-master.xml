@@ -14,7 +14,7 @@
             <column  name="username"  type="varchar(50)">
                 <constraints  nullable="false"/>
             </column>
-            <column  name="password"  type="varchar(50)">
+            <column  name="password"  type="varchar(100)">
                 <constraints  nullable="false"/>
             </column>
             <column  name="first_name"  type="varchar(35)">
@@ -26,7 +26,7 @@
             <column  name="email"  type="varchar(100)">
                 <constraints  nullable="false"/>
             </column>
-            <column  name="role"  type="varchar(30)">
+            <column  name="authority"  type="varchar(30)">
                 <constraints  nullable="false"/>
             </column>
             <column  name="discount_rate"  type="varchar(35)">
@@ -35,42 +35,44 @@
     </changeSet>
 
     <!-- Populating table "users" with sample data   -->
+    <!-- Using Bcrypt to cypher passwords    -->
     <!-- Inserting test user   -->
     <changeSet id="2" author="kkramarenko">
         <insert tableName="users">
             <column  name="username"  value="testuser"/>
-            <column  name="password"  value="testpass"/>
+            <!-- password = testpass            -->
+            <column  name="password"  value="$2a$10$6ik3ohSWzVgBZswmxOShvekfC13tQxFFekwVBoIlih92p1rXmUQAe"/>
             <column  name="first_name"  value="Test"/>
             <column  name="last_name"  value="User"/>
             <column  name="email"  value="testuser@example.com"/>
-            <column  name="role"  value="USER"/>
+            <column  name="authority"  value="USER"/>
             <column  name="discount_rate"  value="starter"/>
         </insert>
     </changeSet>
     <!-- Inserting "real" user   -->
-    <changeSet id="3" author="kkramarenko">
-        <insert tableName="users">
-            <column  name="username"  value="md74"/>
-            <column  name="password"  value="74mihail74"/>
-            <column  name="first_name"  value="Misha"/>
-            <column  name="last_name"  value="Drozdov"/>
-            <column  name="email"  value="mdrozdov74@mail.ru"/>
-            <column  name="role"  value="USER"/>
-            <column  name="discount_rate"  value="bronze"/>
-        </insert>
-    </changeSet>
-    <!-- Inserting admin user   -->
-    <changeSet id="4" author="kkramarenko">
-        <insert tableName="users">
-            <column  name="username"  value="admin"/>
-            <column  name="password"  value="testadmin"/>
-            <column  name="first_name"  value="Test"/>
-            <column  name="last_name"  value="Admin"/>
-            <column  name="email"  value="admin@example.com"/>
-            <column  name="role"  value="ADMIN"/>
-            <column  name="discount_rate"  value="platinum"/>
-        </insert>
-    </changeSet>
+<!--    <changeSet id="3" author="kkramarenko">-->
+<!--        <insert tableName="users">-->
+<!--            <column  name="username"  value="md74"/>-->
+<!--            <column  name="password"  value="74mihail74"/>-->
+<!--            <column  name="first_name"  value="Misha"/>-->
+<!--            <column  name="last_name"  value="Drozdov"/>-->
+<!--            <column  name="email"  value="mdrozdov74@mail.ru"/>-->
+<!--            <column  name="role"  value="USER"/>-->
+<!--            <column  name="discount_rate"  value="bronze"/>-->
+<!--        </insert>-->
+<!--    </changeSet>-->
+<!--    &lt;!&ndash; Inserting admin user   &ndash;&gt;-->
+<!--    <changeSet id="4" author="kkramarenko">-->
+<!--        <insert tableName="users">-->
+<!--            <column  name="username"  value="admin"/>-->
+<!--            <column  name="password"  value="testadmin"/>-->
+<!--            <column  name="first_name"  value="Test"/>-->
+<!--            <column  name="last_name"  value="Admin"/>-->
+<!--            <column  name="email"  value="admin@example.com"/>-->
+<!--            <column  name="role"  value="ADMIN"/>-->
+<!--            <column  name="discount_rate"  value="platinum"/>-->
+<!--        </insert>-->
+<!--    </changeSet>-->
 
 
 

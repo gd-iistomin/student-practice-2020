@@ -3,18 +3,23 @@
         <div id="formContent">
           <!-- Tabs Titles -->
           <h2 class="active"> Sign In </h2>
-          <h2 class="inactive underlineHover">Sign Up </h2>
       
-          <!-- Icon -->
-          <div class="fadeIn first">
-            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
-          </div>
       
           <!-- Login Form -->
-          <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-            <button (click)="login()" type="submit" class="fadeIn fourth"></button>
+          <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
+            <input formControlName="username" type="text" class="fadeIn second" placeholder="username">
+            <input formControlName="password" type="text" class="fadeIn third" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Log In">
+
+            <!-- if auth not successful, display warning -->
+            <div *ngIf="authSuccess == false" class="alert alert-warning col-md-12" role="alert">
+              Bad username / password
+            </div>
+            <p>OR</p>
+            <br>
+            <a routerLink="/sign-up">
+              <button type="signup" class="fadeIn fourth">Sign Up</button>
+            </a> 
           </form>
       
           <!-- Remind Passowrd -->

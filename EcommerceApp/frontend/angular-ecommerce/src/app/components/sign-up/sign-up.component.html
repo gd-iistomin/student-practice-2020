@@ -1,0 +1,22 @@
+<div class="login">
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+          <h2 class="active"> Sign Up </h2>
+      
+      
+          <!-- Login Form -->
+          <form [formGroup]="signUpFormGroup" (ngSubmit)="signUp()">
+            <input formControlName="firstName" type="text" class="fadeIn second" placeholder="First Name">
+            <input formControlName="lastName" type="text" class="fadeIn second" placeholder="Last Name">
+            <input formControlName="email" type="text" class="fadeIn second" placeholder="email">
+            <input formControlName="username" type="text" class="fadeIn second" placeholder="username">
+            <input formControlName="password" type="text" class="fadeIn third" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Sign Up">
+
+          </form>
+      
+      
+        </div>
+      </div>
+</div>
