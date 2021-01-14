@@ -1,21 +1,27 @@
 package kkramarenko.ecommerceapp.service;
 
+import kkramarenko.ecommerceapp.dto.UserDetails;
 import kkramarenko.ecommerceapp.entity.Customer;
 import kkramarenko.ecommerceapp.entity.User;
 import kkramarenko.ecommerceapp.repository.CustomerRepository;
 import kkramarenko.ecommerceapp.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private PasswordEncoder passwordEncoder;
 
     private UserRepository userRepository;
 
     private CustomerRepository customerRepository;
 
-    public UserServiceImpl(UserRepository userRepository, CustomerRepository customerRepository) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CustomerRepository customerRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
     }
@@ -41,10 +47,39 @@ public class UserServiceImpl implements UserService {
 
             user.setCustomer(savedCustomer);
 
+            // get user password, cypher it
+            String pass = user.getPassword();
+            user.setPassword(passwordEncoder.encode(pass));
+
             userRepository.save(user);
             return true;
         }
         //else return false
         return false;
+    }
+
+    @Override
+    public Optional<UserDetails> getUserDetails(String username) {
+        //create empty Optional
+        Optional<UserDetails> userDetailsOptional = Optional.empty();
+
+        // get target user
+        User targetUser = userRepository.findUserByUsername(username);
+
+        //populate dto object with data if user != null
+        if (targetUser != null) {
+            UserDetails userDetails = new UserDetails();
+            userDetails.setUsername(targetUser.getUsername());
+            userDetails.setFirstName(targetUser.getFirstName());
+            userDetails.setLastName(targetUser.getLastName());
+            userDetails.setEmail(targetUser.getEmail());
+            userDetails.setDiscountRate(targetUser.getDiscountRate());
+            userDetails.setCustomerId(targetUser.getCustomer().getId());
+
+            //put to Optional
+            userDetailsOptional = Optional.of(userDetails);
+        }
+
+        return userDetailsOptional;
     }
 }

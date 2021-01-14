@@ -24,7 +24,7 @@ export class UserStatusComponent implements OnInit {
     const logoutLink = 'http://localhost:8000/logout'
     this.http.post(logoutLink, {});
 
-        this.authenticationService.authenticated = false;
+        this.authenticationService.authenticated.next(false);
         this.router.navigateByUrl('/products');
   }
 
