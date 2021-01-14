@@ -39,4 +39,8 @@ public class User {
     @Column(name = "discount_rate")
     private String discountRate;
 
+    @OneToOne()
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+
 }
