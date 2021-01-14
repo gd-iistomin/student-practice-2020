@@ -5,6 +5,13 @@
           <h2 class="active"> Sign Up </h2>
       
       
+          <!-- Show alert only if requestStatusCode is present -->
+          <div *ngIf="requestStatusCode != null">
+              <div *ngIf="requestStatusCode == 226" class="alert alert-warning col-md-12" role="alert">
+                  This username/email already exists.
+              </div>
+          </div>
+
           <!-- Login Form -->
           <form [formGroup]="signUpFormGroup" (ngSubmit)="signUp()">
             <input formControlName="firstName" type="text" class="fadeIn second" placeholder="First Name">
