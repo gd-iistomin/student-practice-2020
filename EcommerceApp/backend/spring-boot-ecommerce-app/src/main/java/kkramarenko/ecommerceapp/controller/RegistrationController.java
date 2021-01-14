@@ -23,11 +23,13 @@ public class RegistrationController {
     public ResponseEntity<?> createUser(@RequestBody User user){
         boolean successfullySavedNewUser = userService.registerUser(user);
 
-        // if user with such username exists -> return BAD_REQUEST status
+        // if user with such username exists -> return IM_USED status
         if(successfullySavedNewUser) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.IM_USED);
         }
     }
+
+
 }
