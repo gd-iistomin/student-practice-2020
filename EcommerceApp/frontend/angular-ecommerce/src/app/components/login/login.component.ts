@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 
 import { from } from 'rxjs';
+import { UserDetails } from 'src/app/common/user-details';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -18,11 +19,16 @@ export class LoginComponent implements OnInit {
 
   username: string;
 
-  authSuccess: boolean = true;
+  authSuccess: boolean = null;
+
+  requestStatusCode: number;
+
+
 
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
               private router: Router) { 
+
   }  
 
   ngOnInit(): void {
@@ -32,7 +38,10 @@ export class LoginComponent implements OnInit {
         // all fields in the form are represented by FormControl, we specify initial value: '' and validators for the given field. 
         username: new FormControl(''),
         password: new FormControl('')
-        })
+        });
+
+        // subscribe to auth value
+        
     
   }
 
@@ -45,11 +54,14 @@ export class LoginComponent implements OnInit {
     const credentials = {username: this.username, password: this.loginFormGroup.controls['password'].value};
     
     this.authenticationService.authenticate(credentials,  () => {this.router.navigateByUrl('/');});
+    
+    this.authenticationService.userDetails.subscribe(data => {console.log(data)});
 
-    // if auth unsuccessful, display error message
-    this.authSuccess = this.authenticationService.authenticated;
-
+    this.authenticationService.authenticated.subscribe(data => {this.authSuccess = data})
+    
     
   }
+
+  authenticated() { return this.authenticationService.authenticated.value; }
 
 }
