@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { User } from 'src/app/common/user';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,7 +13,11 @@ export class SignUpComponent implements OnInit {
 
   signUpFormGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  requestStatusCode: number = 0;
+
+
+
+  constructor(private formBuilder: FormBuilder, private registrationService: RegistrationService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -25,6 +32,40 @@ export class SignUpComponent implements OnInit {
 
       })
 
+  }
+
+  signUp(){
+    // create new User object and populate with data from form
+    let user = new User();
+    user.firstName = this.signUpFormGroup.controls['firstName'].value;
+    user.lastName = this.signUpFormGroup.controls['lastName'].value;
+    user.email = this.signUpFormGroup.controls['email'].value;
+    user.username = this.signUpFormGroup.controls['username'].value;
+    user.password = this.signUpFormGroup.controls['password'].value;
+
+    //set default role of "USER" and discount rate of "starter"
+    user.authority = "USER";
+    user.discountRate = "starter";
+
+    // post User via registration service
+    // get the status code:
+    this.registrationService.createUser(user).subscribe( Response => 
+      {
+        this.requestStatusCode = Response.status;
+    });
+
+
+    // if it's 201(Status code == CREATED), then show user message that user successfully created,
+    //  redirect user to main pade
+    if(this.requestStatusCode == 201){
+      this.router.navigateByUrl("/products");
+      alert('User has been created!');
+    }
+
+
+    // if 400(Status code == BAD_REQUEST), then show alert that user with matchinh username/email already exists (ngIf in html)
+
+    
   }
   
 
