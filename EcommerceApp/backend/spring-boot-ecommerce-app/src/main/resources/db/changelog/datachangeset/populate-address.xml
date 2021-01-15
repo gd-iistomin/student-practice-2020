@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Populate "address" tables with data  -->
+    <changeSet id="sample-address-1" author="kkramarenko">
+        <insert tableName="address" schemaName="full-stack-ecommerce-liquibase">
+                    <column  name="city"  value="Moscow"/>
+                    <column  name="country"  value="Russia"/>
+                    <column  name="state"  value="Moscow"/>
+                    <column  name="street"  value="Tverskaya"/>
+                    <column  name="zip_code"  value="125375"/>
+        </insert>
+    </changeSet>
+    <changeSet id="sample-address-2" author="kkramarenko">
+        <insert tableName="address" schemaName="full-stack-ecommerce-liquibase">
+            <column  name="city"  value="Edmonton"/>
+            <column  name="country"  value="Canada"/>
+            <column  name="state"  value="Alberta"/>
+            <column  name="street"  value="76 Ave NW"/>
+            <column  name="zip_code"  value="T6P 1T4"/>
+        </insert>
+    </changeSet>
+    <changeSet id="sample-address-3" author="kkramarenko">
+        <insert tableName="address" schemaName="full-stack-ecommerce-liquibase">
+            <column  name="city"  value="New York"/>
+            <column  name="country"  value="United States"/>
+            <column  name="state"  value="New York"/>
+            <column  name="street"  value="E 96th St"/>
+            <column  name="zip_code"  value="10128"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
