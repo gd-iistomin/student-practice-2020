@@ -26,6 +26,7 @@ import { LoginButtonComponent } from './components/login-button/login-button.com
 import { AuthenticationService } from './services/authentication.service';
 import { UserStatusComponent } from './components/user-status/user-status.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { UserOrdersListComponent } from './components/user-orders-list/user-orders-list.component';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -39,6 +40,7 @@ export class XhrInterceptor implements HttpInterceptor {
 }
 
 const routes: Routes =[
+  {path: 'show-user-orders', component: UserOrdersListComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'login', component: LoginComponent},
   {path: 'order-details/:orderTrackingNumber', component: OrderStatusComponent},
@@ -68,7 +70,8 @@ const routes: Routes =[
     OrderTrackingSearchFormComponent,
     LoginButtonComponent,
     UserStatusComponent,
-    SignUpComponent
+    SignUpComponent,
+    UserOrdersListComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
