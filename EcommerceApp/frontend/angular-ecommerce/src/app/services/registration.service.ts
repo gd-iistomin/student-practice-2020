@@ -21,8 +21,4 @@ export class RegistrationService {
     return this.httpClient.post<User>(userCreationUrl, theUser, {observe: 'response'});
   }
 
-  handleError(error){
-
-    return throwError("user already exists");
-  }
 }

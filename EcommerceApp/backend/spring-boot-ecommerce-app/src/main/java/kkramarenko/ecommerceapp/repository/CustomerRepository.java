@@ -6,4 +6,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin("http://localhost:4200")
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+
+    Customer findCustomerById(Long customerId);
+
+    Customer findCustomerByFirstNameAndLastNameAndEmail(String firstName, String lastName, String email);
 }

@@ -43,12 +43,25 @@ public class CheckoutServiceImpl implements CheckoutService {
         // set order status to "created"
         order.setStatus(OrderStatusEnum.CREATED.toString());
 
-        // populate customer with order
+        //get customer
         Customer customer = purchase.getCustomer();
-        customer.add(order);
 
-        // save to db
-        customerRepository.save(customer);
+        // check if such customer exists
+        Customer existingCustomer = customerRepository.findCustomerByFirstNameAndLastNameAndEmail(
+                    customer.getFirstName(), customer.getLastName(), customer.getEmail());
+
+        // if customer exists, add him new order and save
+        if(existingCustomer != null){
+            existingCustomer.add(order);
+            customerRepository.save(existingCustomer);
+        } else {
+            // else populate new customer with order
+            customer.add(order);
+            // save to db
+            customerRepository.save(customer);
+        }
+
+
 
         // return a response
         return new PurchaseResponse(orderTrackingNumber);

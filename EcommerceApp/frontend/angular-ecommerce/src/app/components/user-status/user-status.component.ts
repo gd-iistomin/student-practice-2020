@@ -28,4 +28,8 @@ export class UserStatusComponent implements OnInit {
         this.router.navigateByUrl('/products');
   }
 
+  showUserOrders(){
+    this.router.navigateByUrl(`/show-user-orders`)
+  }
+
 }
