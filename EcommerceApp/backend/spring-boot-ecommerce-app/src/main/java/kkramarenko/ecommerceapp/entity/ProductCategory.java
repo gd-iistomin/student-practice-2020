@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "product_category")
 @Getter
-@Setter// @Data produces StackOverFlowError - to avoid that, replacing with @Getter @Setter
+@Setter// @Data produces StackOverFlowError(due to recursive relations with product) - to avoid that, replacing with @Getter @Setter
 public class ProductCategory {
 
 

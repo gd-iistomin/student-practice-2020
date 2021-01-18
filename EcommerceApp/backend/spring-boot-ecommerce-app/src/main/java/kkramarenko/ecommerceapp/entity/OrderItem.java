@@ -33,7 +33,6 @@ public class OrderItem {
     @Column(name = "product_id")
     private Long productId;
 
-    //todo check if this works as intended(write data to db when posted, but excluded from JSON when get())
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "order_id")

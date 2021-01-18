@@ -12,7 +12,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // Spring generates endpoint for that method - .../api/products/search/findByCategoryId?id=2
 
-    Page<Product> findByCategoryId(@RequestParam("id") Long id,Pageable pageable);
+    Page<Product> findByCategoryId(@RequestParam("id") Long id, Pageable pageable);
 
 
     // Spring generates a method that returns products with name that matches "%name%", name is specified in url param

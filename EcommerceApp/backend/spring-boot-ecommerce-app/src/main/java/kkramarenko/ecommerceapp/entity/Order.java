@@ -67,13 +67,13 @@ public class Order {
     private Address billingAddress;
 
     public void add(OrderItem orderItem){
-        if(orderItem != null){
-            if(orderItems == null){
-                orderItems= new HashSet<>();
-            }
+        if(orderItem == null){ return; }
 
-            orderItems.add(orderItem);
-            orderItem.setOrder(this);
+        if(orderItems == null){
+            orderItems= new HashSet<>();
         }
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+
     }
 }

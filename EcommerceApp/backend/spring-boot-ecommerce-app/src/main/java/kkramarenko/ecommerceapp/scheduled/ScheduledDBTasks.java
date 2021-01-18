@@ -1,7 +1,7 @@
 package kkramarenko.ecommerceapp.scheduled;
 
 import kkramarenko.ecommerceapp.entity.Order;
-import kkramarenko.ecommerceapp.enums.OrderStatusEnum;
+import kkramarenko.ecommerceapp.enums.OrderStatus;
 import kkramarenko.ecommerceapp.repository.OrderRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -21,44 +21,48 @@ public class ScheduledDBTasks {
         this.orderRepository = orderRepository;
     }
 
-    // 1800000 milliseconds = 30 mins, task runs once in half an hour
-    @Scheduled(fixedRate = 1800000)
+    private final long HALF_AN_HOUR_IN_MILLISECONDS = 1800000L;
+
+    /** Checks and processes order status in database
+     * Is invoked once in half an hour
+     *
+     * Every 24h order status should be updated to next status from OrderStatus enum,
+     * until order is COMPLETED
+     * @see OrderStatus
+     *
+     * gets all orders, loops through them, checks time delta between current time and
+     * last_updated time, if 24 hours have passed, then changes order status to next,
+     * if order is not COMPLETED yet.
+     */
+
+    @Scheduled(fixedRate = HALF_AN_HOUR_IN_MILLISECONDS)
     public void checkOrderStatus(){
 
-        //get all orders
         List<Order> orders = orderRepository.findAll();
 
-        //iterate through orders, check last_updated column:
         for(Order tempOrder: orders){
-            //get order status
             //since some statuses were stored lowercase, convert to UpperCase
-            OrderStatusEnum orderStatus = OrderStatusEnum.valueOf(tempOrder.getStatus().toUpperCase());
+            OrderStatus orderStatus = OrderStatus.valueOf(tempOrder.getStatus().toUpperCase());
 
-            //get current Date
             Date currentDate = new Date();
 
-            //get order last updated Date
             Date lastUpdatedDate = tempOrder.getLastUpdated();
 
-            //delta between these Dates in hours
             Duration delta = Duration.between(lastUpdatedDate.toInstant(), currentDate.toInstant());
             long hoursFromLastUpdate = delta.toHours();
 
-            //if order was last updated more than 24h ago, and is not completed yet, then update its status to next in enum
-            if (hoursFromLastUpdate >= 24 && !(orderStatus.equals(OrderStatusEnum.COMPLETED))){
+            if (hoursFromLastUpdate >= 24 && !(orderStatus.equals(OrderStatus.COMPLETED))){
                 switch (orderStatus){
                     case CREATED:
-                        orderStatus = OrderStatusEnum.PROCESSING;
+                        orderStatus = OrderStatus.PROCESSING;
                     case PROCESSING:
-                        orderStatus = OrderStatusEnum.SHIPPING;
+                        orderStatus = OrderStatus.SHIPPING;
                     case SHIPPING:
-                        orderStatus = OrderStatusEnum.COMPLETED;
+                        orderStatus = OrderStatus.COMPLETED;
                 }
             }
-            //change order status
             tempOrder.setStatus(orderStatus.toString());
 
-            //save order
             orderRepository.save(tempOrder);
         }
 
