@@ -1,7 +1,10 @@
 ### IntelliJ IDEA ###
 **/.idea
 **/.mvn
+<<<<<<< HEAD
 **/target
+=======
+>>>>>>> Removed system and IDE files
 mvnw
 mvnw.cmd
 
