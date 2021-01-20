@@ -25,17 +25,14 @@ public class UserOrdersController {
 
     @GetMapping("/{customerId}")
     public List<Order> getUserOrders(@PathVariable Long customerId){
-        // get Customer by customerId
         Customer targetCustomer = customerRepository.findCustomerById(customerId);
 
         List<Order> userOrdersList = new ArrayList<>();
 
-        // get List of orders by customer, if customer with such id exists
         if(targetCustomer != null){
             userOrdersList = orderRepository.findOrdersByCustomer(targetCustomer);
         }
 
-        // return list of orders
         return  userOrdersList;
 
     }

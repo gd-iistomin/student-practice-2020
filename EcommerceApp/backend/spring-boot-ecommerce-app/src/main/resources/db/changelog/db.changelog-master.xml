@@ -5,7 +5,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
 
-    <!-- Run chabgeset to create schema "full-stack-ecommerce", tables "product" and "product_category"  -->
+    <!-- Run script to create schema "full-stack-ecommerce-liquibase", tables "product" and "product_category"  -->
     <include file="sctructurechangeset/create-products.xml" relativeToChangelogFile="true"/>
 
     <!-- Run script to populate product and product_category tables with data  -->

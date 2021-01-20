@@ -28,11 +28,12 @@ public class LoginController {
     }
 
     // endpoint for retrieving user data by username
+    // method is protected by spring security, however
+//    todo consider allowing access only to self user details by matching username param with auth 'username' header
     @GetMapping("/userdetails/{username}")
     public ResponseEntity<UserDetails> getUserDetails(@PathVariable String username){
         Optional<UserDetails> userDetailsOptional = userService.getUserDetails(username);
 
-        // on success, send 200 OK status code and user detail, else send
         if(userDetailsOptional.isPresent()){
             return new ResponseEntity<>(userDetailsOptional.get(), HttpStatus.OK);
         } else {

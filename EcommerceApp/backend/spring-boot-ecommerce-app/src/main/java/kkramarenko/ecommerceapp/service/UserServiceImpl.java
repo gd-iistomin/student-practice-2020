@@ -26,59 +26,68 @@ public class UserServiceImpl implements UserService {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Saves new user to db
+     *
+     * Checks if user with matching username/email exists, if so, aborts creation, returns false
+     * If no user with matching fields exist, creates new customer, based on user's info, binds
+     * that customer to user, cyphers password, saves user
+     *
+     * @param user - new user to save in database
+     * @return boolean - true on success, false on fail
+     */
     @Override
     @Transactional
     public boolean registerUser(User user) {
-        // check if user with such username or email exists
         User userWithMatchingUsername = userRepository.findUserByUsername(user.getUsername());
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
 
-        //if no existing user with given username or email -> create new customer based on user info, then
-        //add customerId to user, finally save user
-        if(userWithMatchingUsername == null && userWithMatchingEmail == null){
 
-            // create new customer, populate it, save
-            Customer newCustomer = new Customer();
-            newCustomer.setFirstName(user.getFirstName());
-            newCustomer.setLastName(user.getLastName());
-            newCustomer.setEmail(user.getEmail());
-            // save customer, retrieve it to get Id
-            Customer savedCustomer = customerRepository.save(newCustomer);
+        if(userWithMatchingUsername != null || userWithMatchingEmail != null){ return false; }
 
-            user.setCustomer(savedCustomer);
+        Customer newCustomer = new Customer();
+        newCustomer.setFirstName(user.getFirstName());
+        newCustomer.setLastName(user.getLastName());
+        newCustomer.setEmail(user.getEmail());
+        Customer savedCustomer = customerRepository.save(newCustomer);
 
-            // get user password, cypher it
-            String pass = user.getPassword();
-            user.setPassword(passwordEncoder.encode(pass));
+        user.setCustomer(savedCustomer);
 
-            userRepository.save(user);
-            return true;
-        }
-        //else return false
-        return false;
+        String pass = user.getPassword();
+        user.setPassword(passwordEncoder.encode(pass));
+
+        userRepository.save(user);
+        return true;
     }
 
+
+    /**
+     * Gets user details by username
+     *
+     * If user with given username doesn't exist, returns empty Optional
+     * else, populates UserDetails object with user data, returns Optional with UserDetails
+     * @see UserDetails
+     *
+     * @param username - username of target user
+     * @return Optional<UserDetails>
+     */
     @Override
     public Optional<UserDetails> getUserDetails(String username) {
-        //create empty Optional
         Optional<UserDetails> userDetailsOptional = Optional.empty();
 
-        // get target user
         User targetUser = userRepository.findUserByUsername(username);
 
-        //populate dto object with data if user != null
-        if (targetUser != null) {
-            UserDetails userDetails = new UserDetails();
-            userDetails.setUsername(targetUser.getUsername());
-            userDetails.setFirstName(targetUser.getFirstName());
-            userDetails.setLastName(targetUser.getLastName());
-            userDetails.setEmail(targetUser.getEmail());
-            userDetails.setDiscountRate(targetUser.getDiscountRate());
-            userDetails.setCustomerId(targetUser.getCustomer().getId());
+        if (targetUser == null) { return userDetailsOptional; }
 
-            //put to Optional
-            userDetailsOptional = Optional.of(userDetails);
-        }
+        UserDetails userDetails = new UserDetails();
+        userDetails.setUsername(targetUser.getUsername());
+        userDetails.setFirstName(targetUser.getFirstName());
+        userDetails.setLastName(targetUser.getLastName());
+        userDetails.setEmail(targetUser.getEmail());
+        userDetails.setDiscountRate(targetUser.getDiscountRate());
+        userDetails.setCustomerId(targetUser.getCustomer().getId());
+
+        userDetailsOptional = Optional.of(userDetails);
 
         return userDetailsOptional;
     }
