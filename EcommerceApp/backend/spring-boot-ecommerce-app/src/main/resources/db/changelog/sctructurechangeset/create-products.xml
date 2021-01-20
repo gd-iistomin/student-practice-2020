@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <!-- Creating schema "full-stack-ecommerce", tables "product" and "product_category"  -->
+    <!-- Creating  tables "product" and "product_category"  -->
     <changeSet id="create-products" author="kkramarenko">
         <sqlFile path="create-products.sql" relativeToChangelogFile="true"/>
     </changeSet>

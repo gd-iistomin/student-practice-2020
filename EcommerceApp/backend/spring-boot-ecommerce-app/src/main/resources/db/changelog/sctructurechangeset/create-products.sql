@@ -1,9 +1,7 @@
 -- -----------------------------------------------------
 -- Schema full-stack-ecommerce-liquibase
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `full-stack-ecommerce-liquibase`;
 
-CREATE SCHEMA `full-stack-ecommerce-liquibase`;
 USE `full-stack-ecommerce-liquibase` ;
 
 -- -----------------------------------------------------
