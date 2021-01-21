@@ -1,12 +1,11 @@
+### local backend gitignore ###
 
-**/target/
+**/target
 
+application-prod.properties
 
+# docker db credentials directory
+**/secrets
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
 
 
