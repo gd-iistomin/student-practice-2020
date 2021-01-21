@@ -9,11 +9,11 @@ services:
     environment:
       MYSQL_DATABASE: 'full-stack-ecommerce-liquibase'
       # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'ecommerceappdocker'
+      MYSQL_USER_FILE: /run/secrets/mysql_user
       # You can use whatever password you like
-      MYSQL_PASSWORD: 'ecommerceappdocker'
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
       # Password for root access
-      MYSQL_ROOT_PASSWORD: 'dockermysqlroot'
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
 
     ports:
       # <Port exposed> : < MySQL Port running inside container>
@@ -25,9 +25,20 @@ services:
     volumes:
       - my-db:/var/lib/mysql
       - ./init.sql:/data/application/init.sql
+    secrets: # secrets block for db
+      - mysql_user
+      - mysql_password
+      - mysql_root_password
 
 
 # Names our volume
 volumes:
   my-db:
 
+secrets:
+  mysql_user:
+    file: secrets/mysql_user.txt
+  mysql_password:
+    file: secrets/mysql_password.txt
+  mysql_root_password:
+    file: secrets/mysql_root_password.txt
