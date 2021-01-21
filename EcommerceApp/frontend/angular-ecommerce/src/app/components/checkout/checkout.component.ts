@@ -166,7 +166,12 @@ export class CheckoutComponent implements OnInit {
 
     this.checkoutService.placeOrder(purchase).subscribe({ 
         next: response => {
+
             alert(`Your order has been received.\nOreder tracking number: ${response.orderTrackingNumber}`);
+            if (response.discountRateChanged == true){
+              alert(`Your discount rate has changed! New discount rate is ${response.newDiscountRate}`);
+            }
+
 
             this.resetCart();
           },
