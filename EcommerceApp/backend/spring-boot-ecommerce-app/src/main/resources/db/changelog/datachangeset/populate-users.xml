@@ -1,0 +1,51 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Populate "users" table with data  -->
+
+    <!--   username: "testuser", password: "testpass"(Bcrypted) -->
+    <changeSet id="sample-user-1" author="kkramarenko">
+        <insert tableName="users" schemaName="full-stack-ecommerce-liquibase">
+            <column name="username" value="testuser"/>
+            <column name="password" value="$2a$10$6ik3ohSWzVgBZswmxOShvekfC13tQxFFekwVBoIlih92p1rXmUQAe"/>
+            <column  name="first_name"  value="Test"/>
+            <column  name="last_name"  value="User"/>
+            <column  name="email"  value="testuser@test.com"/>
+            <column name="authority" value="USER"/>
+            <column name="discount_rate" value="starter"/>
+            <column name="customer_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <!--   username: "jackp", password: "jackpTEST"(Bcrypted) -->
+    <changeSet id="sample-user-2" author="kkramarenko">
+        <insert tableName="users" schemaName="full-stack-ecommerce-liquibase">
+            <column name="username" value="jackp"/>
+            <column name="password" value="$2a$10$ukZR18Pfg0sJvXhsCZAWD.irjMBHHXZUNUGm9E5LFOosruj8a.oMa"/>
+            <column  name="first_name"  value="Jack"/>
+            <column  name="last_name"  value="Palmer"/>
+            <column  name="email"  value="jpedmonton@yahoo.com"/>
+            <column name="authority" value="USER"/>
+            <column name="discount_rate" value="starter"/>
+            <column name="customer_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <!--   username: "parker78", password: "RICHARDp"(Bcrypted) -->
+    <changeSet id="sample-user-3" author="kkramarenko">
+        <insert tableName="users" schemaName="full-stack-ecommerce-liquibase">
+            <column name="username" value="parker78"/>
+            <column name="password" value="$2a$10$DUdWFKLmtVPDB3VPyKvC6eYXSnRf4QsByt/PQ7cbYKTg1U9Qba1LW"/>
+            <column  name="first_name"  value="Richard"/>
+            <column  name="last_name"  value="Parker"/>
+            <column  name="email"  value="parker.richard@gmail.com"/>
+            <column name="authority" value="USER"/>
+            <column name="discount_rate" value="starter"/>
+            <column name="customer_id" value="3"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

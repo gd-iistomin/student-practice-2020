@@ -4,6 +4,7 @@
 **/target
 mvnw
 mvnw.cmd
+application-prod.properties
 
 ### VS Code ###
 

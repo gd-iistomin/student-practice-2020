@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Populate "customer" tables with data  -->
+    <changeSet id="sample-customer-1" author="kkramarenko">
+        <insert tableName="customer" schemaName="full-stack-ecommerce-liquibase">
+            <column  name="first_name"  value="Test"/>
+            <column  name="last_name"  value="User"/>
+            <column  name="email"  value="testuser@test.com"/>
+        </insert>
+    </changeSet>
+    <changeSet id="sample-customer-2" author="kkramarenko">
+        <insert tableName="customer" schemaName="full-stack-ecommerce-liquibase">
+            <column  name="first_name"  value="Jack"/>
+            <column  name="last_name"  value="Palmer"/>
+            <column  name="email"  value="jpedmonton@yahoo.com"/>
+        </insert>
+    </changeSet>
+    <changeSet id="sample-customer-3" author="kkramarenko">
+        <insert tableName="customer" schemaName="full-stack-ecommerce-liquibase">
+            <column  name="first_name"  value="Richard"/>
+            <column  name="last_name"  value="Parker"/>
+            <column  name="email"  value="parker.richard@gmail.com"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

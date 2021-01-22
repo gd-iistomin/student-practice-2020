@@ -46,7 +46,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         //disable HTTP methods for State: PUT, POST, DELETE
         disableHttpMethods(State.class, config, theUnsupportedActions);
 
-        // call aninternal helper method
+        // call an internal helper method
         exposeIds(config);
     }
 
@@ -64,7 +64,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         // get a list of all entity classes
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 
-        // create anarray of entity types
+        // create an array of entity types
         List<Class> entityClasses = new ArrayList<>();
 
         // get entity types for entities

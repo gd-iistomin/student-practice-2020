@@ -4,73 +4,35 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <!--    <include file=""></include>-->
-    <!-- Creating table "users"    -->
-    <changeSet  id="1"  author="kkramarenko">
-        <createTable  tableName="users">
-            <column  name="id"  type="int" autoIncrement="true">
-                <constraints  primaryKey="true"  nullable="false"/>
-            </column>
-            <column  name="username"  type="varchar(50)">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="password"  type="varchar(50)">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="first_name"  type="varchar(35)">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="last_name"  type="varchar(35)">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="email"  type="varchar(100)">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="role"  type="varchar(30)">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="discount_rate"  type="varchar(35)">
-            </column>
-        </createTable>
-    </changeSet>
 
-    <!-- Populating table "users" with sample data   -->
-    <!-- Inserting test user   -->
-    <changeSet id="2" author="kkramarenko">
-        <insert tableName="users">
-            <column  name="username"  value="testuser"/>
-            <column  name="password"  value="testpass"/>
-            <column  name="first_name"  value="Test"/>
-            <column  name="last_name"  value="User"/>
-            <column  name="email"  value="testuser@example.com"/>
-            <column  name="role"  value="USER"/>
-            <column  name="discount_rate"  value="starter"/>
-        </insert>
-    </changeSet>
-    <!-- Inserting "real" user   -->
-    <changeSet id="3" author="kkramarenko">
-        <insert tableName="users">
-            <column  name="username"  value="md74"/>
-            <column  name="password"  value="74mihail74"/>
-            <column  name="first_name"  value="Misha"/>
-            <column  name="last_name"  value="Drozdov"/>
-            <column  name="email"  value="mdrozdov74@mail.ru"/>
-            <column  name="role"  value="USER"/>
-            <column  name="discount_rate"  value="bronze"/>
-        </insert>
-    </changeSet>
-    <!-- Inserting admin user   -->
-    <changeSet id="4" author="kkramarenko">
-        <insert tableName="users">
-            <column  name="username"  value="admin"/>
-            <column  name="password"  value="testadmin"/>
-            <column  name="first_name"  value="Test"/>
-            <column  name="last_name"  value="Admin"/>
-            <column  name="email"  value="admin@example.com"/>
-            <column  name="role"  value="ADMIN"/>
-            <column  name="discount_rate"  value="platinum"/>
-        </insert>
-    </changeSet>
+    <!-- Run script to create schema "full-stack-ecommerce-liquibase", tables "product" and "product_category"  -->
+    <include file="sctructurechangeset/create-products.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run script to populate product and product_category tables with data  -->
+    <include file="datachangeset/populate-products-and-categories.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run script to create tables "country" and "state"-->
+    <include file="sctructurechangeset/create-countries-and-states.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run script to populate "country" and "state" tables with data    -->
+    <include file="datachangeset/populate-countries-and-states.xml" relativeToChangelogFile="true"/>
+    
+    <!-- Run script to populate tables "order" "order_item", "customer", "address" with data   -->
+    <include file="sctructurechangeset/create-order-tables.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run changeset to create table "users"   -->
+    <include file="sctructurechangeset/create-users.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run changeset to load sample data to "address" table   -->
+    <include file="datachangeset/populate-address.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run changeset to load sample data to "customer" table   -->
+    <include file="datachangeset/populate-customer.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run changeset to load sample data to "users" table   -->
+    <include file="datachangeset/populate-users.xml" relativeToChangelogFile="true"/>
+
+    
 
 
 

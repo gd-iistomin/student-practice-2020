@@ -27,7 +27,7 @@ public class CheckoutServiceImpl implements CheckoutService {
      * @param purchase - purchase dto coming from frontend
      * @return PurchaseResponse - contains orderTrackingNumber
      *
-     *  Gets dto from frontend, populates entities based on dto, saves order to database
+     *  Gets dto from frontend, populates entities based on dto, saves order to database, returns response with generated tracking number
      */
     @Override
     @Transactional
@@ -45,10 +45,21 @@ public class CheckoutServiceImpl implements CheckoutService {
         order.setBillingAddress(purchase.getBillingAddress());
         order.setStatus(OrderStatus.CREATED.toString());
 
-        Customer customer = purchase.getCustomer();
-        customer.add(order);
 
-        customerRepository.save(customer);
+        Customer customer = purchase.getCustomer();
+        
+        Customer existingCustomer = customerRepository.findCustomerByFirstNameAndLastNameAndEmail(
+                    customer.getFirstName(), customer.getLastName(), customer.getEmail());
+
+        if(existingCustomer != null){
+            existingCustomer.add(order);
+            customerRepository.save(existingCustomer);
+        } else {
+            customer.add(order);
+            customerRepository.save(customer);
+        }
+
+
 
         return new PurchaseResponse(orderTrackingNumber);
     }

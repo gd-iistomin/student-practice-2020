@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { ProductService } from './services/product.service';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
@@ -23,10 +23,25 @@ import { from } from 'rxjs';
 import { OrderStatusComponent } from './components/order-status/order-status.component';
 import { OrderTrackingSearchFormComponent } from './components/order-tracking-search-form/order-tracking-search-form.component';
 import { LoginButtonComponent } from './components/login-button/login-button.component';
+import { AuthenticationService } from './services/authentication.service';
+import { UserStatusComponent } from './components/user-status/user-status.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { UserOrdersListComponent } from './components/user-orders-list/user-orders-list.component';
 
+@Injectable()
+export class XhrInterceptor implements HttpInterceptor {
 
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const xhr = req.clone({
+      headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
+    });
+    return next.handle(xhr);
+  }
+}
 
 const routes: Routes =[
+  {path: 'show-user-orders', component: UserOrdersListComponent},
+  {path: 'sign-up', component: SignUpComponent},
   {path: 'login', component: LoginComponent},
   {path: 'order-details/:orderTrackingNumber', component: OrderStatusComponent},
   {path: 'order-tracking-search', component: OrderTrackingSearchFormComponent},
@@ -53,7 +68,10 @@ const routes: Routes =[
     LoginComponent,
     OrderStatusComponent,
     OrderTrackingSearchFormComponent,
-    LoginButtonComponent
+    LoginButtonComponent,
+    UserStatusComponent,
+    SignUpComponent,
+    UserOrdersListComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -62,7 +80,9 @@ const routes: Routes =[
     NgbModule,
     ReactiveFormsModule,
   ],
-  providers: [ProductService],
+  providers: [ProductService, AuthenticationService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
