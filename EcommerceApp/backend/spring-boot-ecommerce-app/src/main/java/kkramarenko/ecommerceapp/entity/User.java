@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Setter
 public class User {
 
-//    FIXME bind users to customers to get list of orders for user
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

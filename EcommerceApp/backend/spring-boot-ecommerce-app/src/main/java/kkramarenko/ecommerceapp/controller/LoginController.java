@@ -27,17 +27,22 @@ public class LoginController {
         return user;
     }
 
-    // endpoint for retrieving user data by username
-    // method is protected by spring security, however
-//    todo consider allowing access only to self user details by matching username param with auth 'username' header
+
+    /**
+     * Endpoint for retrieving user data by username
+     *
+     * endpoint is protected by spring security, however
+     * in further commits consider allowing access only to self user details,
+     * by matching username param with auth 'username' header
+     * @see UserDetails
+     *
+     * @param username
+     * @return ResponseEntity<UserDetails>
+     */
     @GetMapping("/userdetails/{username}")
     public ResponseEntity<UserDetails> getUserDetails(@PathVariable String username){
         Optional<UserDetails> userDetailsOptional = userService.getUserDetails(username);
 
-        if(userDetailsOptional.isPresent()){
-            return new ResponseEntity<>(userDetailsOptional.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        return userDetailsOptional.map(userDetails -> new ResponseEntity<>(userDetails, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
     }
 }

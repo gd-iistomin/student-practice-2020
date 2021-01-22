@@ -20,13 +20,13 @@ public class RegistrationController {
 
 
     @PostMapping("/users")
-    public ResponseEntity<?> createUser(@RequestBody User user){
+    public ResponseEntity createUser(@RequestBody User user){
         boolean successfullySavedNewUser = userService.registerUser(user);
 
         if(successfullySavedNewUser) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity(HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(HttpStatus.IM_USED);
+            return new ResponseEntity(HttpStatus.IM_USED);
         }
     }
 

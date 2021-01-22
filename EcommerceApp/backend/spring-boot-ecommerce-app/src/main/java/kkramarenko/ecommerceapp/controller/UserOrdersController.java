@@ -27,13 +27,10 @@ public class UserOrdersController {
     public List<Order> getUserOrders(@PathVariable Long customerId){
         Customer targetCustomer = customerRepository.findCustomerById(customerId);
 
-        List<Order> userOrdersList = new ArrayList<>();
+        if(targetCustomer == null){ return null; }
 
-        if(targetCustomer != null){
-            userOrdersList = orderRepository.findOrdersByCustomer(targetCustomer);
-        }
+        return orderRepository.findOrdersByCustomer(targetCustomer);
 
-        return  userOrdersList;
 
     }
 }

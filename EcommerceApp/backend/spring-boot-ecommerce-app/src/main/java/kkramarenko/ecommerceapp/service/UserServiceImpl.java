@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         User userWithMatchingUsername = userRepository.findUserByUsername(user.getUsername());
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
 
-
+        //TODO: Consider informing user whether username or email is already used
         if(userWithMatchingUsername != null || userWithMatchingEmail != null){ return false; }
 
         Customer newCustomer = new Customer();

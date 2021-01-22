@@ -2,10 +2,13 @@ package kkramarenko.ecommerceapp.dto;
 
 import lombok.Data;
 
+/**
+ * Class is used to send back details about user on login to pre-populate forms,
+ * get info about user's orders
+ */
 @Data
 public class UserDetails {
 
-    // class is used to send back details about user on login to pre-populate forms and bind orders to user.
     private String username;
     private String firstName;
     private String lastName;
