@@ -8,7 +8,10 @@
           <!-- Login Form -->
           <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
             <input formControlName="username" type="text" class="fadeIn second" placeholder="username">
-            <input formControlName="password" type="text" class="fadeIn third" placeholder="password">
+            <show-hide-password size="sm" class="fadeIn third passinput" [btnOutline]="false">
+              <input formControlName="password" type="password" placeholder="password" >
+            </show-hide-password>
+            <!-- <input formControlName="password" type="text" class="fadeIn third" placeholder="password"> -->
             <input type="submit" class="fadeIn fourth" value="Log In">
 
             <!-- if auth not successful, display warning -->
