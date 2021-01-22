@@ -13,9 +13,21 @@
                         </a>
                         <h1>
                             <a routerLink="/products/{{ tempProduct.id }}" style="color:rgb(49, 49, 49)">{{ tempProduct.name }}</a>
-                        </h1>   
-                        <div class="price">{{ tempProduct.unitPrice | currency: 'USD' }}</div>
-                        <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
+                        </h1>
+                        <!-- div for showing price for unauthenticated user or with starter discount rate -->
+                        <div *ngIf="!authenticated() || offPercent == 0">  
+                            <div class="price">{{ tempProduct.unitPrice | currency: 'USD' }}</div>
+                            <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
+                        </div> 
+                        <!-- div for showing price with discount -->
+                        <div *ngIf="authenticated() && offPercent > 0">  
+                            <div class="price">
+                                <s>{{ tempProduct.unitPrice | currency: 'USD' }}</s>
+                                <span></span>
+                                {{ (tempProduct.unitPrice / (100)) * (100 - offPercent) | currency: 'USD' }}
+                            </div>
+                            <button (click)="addToCartWithDiscount(tempProduct, offPercent)" class="btn btn-primary btn-sm">Add to cart</button>
+                        </div> 
                     </div>
                 </div>
 

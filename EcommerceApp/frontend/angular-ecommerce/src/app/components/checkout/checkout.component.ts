@@ -169,7 +169,16 @@ export class CheckoutComponent implements OnInit {
 
             alert(`Your order has been received.\nOreder tracking number: ${response.orderTrackingNumber}`);
             if (response.discountRateChanged == true){
-              alert(`Your discount rate has changed! New discount rate is ${response.newDiscountRate}`);
+              let offPercentMap = new Map<string, number>();
+              offPercentMap.set("starter", 0);
+              offPercentMap.set("bronze", 3);
+              offPercentMap.set("silver", 5);
+              offPercentMap.set("gold", 7);
+              offPercentMap.set("platinum", 10);
+              let newDiscountRate: string = response.newDiscountRate;
+              let offPercent: number = offPercentMap.get(newDiscountRate)
+              alert(`Your discount rate has changed! New discount rate is ${newDiscountRate}.
+                     Now you have ${offPercent}% off of any item!`);
             }
 
 

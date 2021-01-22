@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -17,6 +18,8 @@ export class ProductListComponent implements OnInit {
   previousCategoryId: number = 1;
   searchMode: boolean = false;
 
+  offPercent: number = 0;
+
   // properties for pagination
 
   thePageNumber: number = 1;
@@ -28,9 +31,26 @@ export class ProductListComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private cartService: CartService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    //get off percent if user is logged in
+    if(this.authenticated()){
+      let offPercentMap = new Map<string, number>();
+      offPercentMap.set("starter", 0);
+      offPercentMap.set("bronze", 3);
+      offPercentMap.set("silver", 5);
+      offPercentMap.set("gold", 7);
+      offPercentMap.set("platinum", 10);
+      this.authenticationService.userDetails.subscribe(data => {
+        this.offPercent = offPercentMap.get(data.discountRate)
+      });
+
+
+    } 
+
+
     this.route.paramMap.subscribe(() => {
     this.listProducts();
     });
@@ -114,5 +134,14 @@ export class ProductListComponent implements OnInit {
 
     this.cartService.addToCart(theCartItem);
   }
+
+  addToCartWithDiscount(theProduct: Product, theOffPercent: number){
+    let theCartItem: CartItem = new CartItem(theProduct);
+
+    theCartItem.unitPrice *= ((100 - theOffPercent) / 100);
+    this.cartService.addToCart(theCartItem);
+  }
+
+  authenticated() { return this.authenticationService.authenticated.value; }
 
 }
