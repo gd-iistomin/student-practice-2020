@@ -6,6 +6,7 @@ import kkramarenko.ecommerceapp.entity.Address;
 import kkramarenko.ecommerceapp.entity.Customer;
 import kkramarenko.ecommerceapp.entity.Order;
 import kkramarenko.ecommerceapp.entity.OrderItem;
+import kkramarenko.ecommerceapp.enums.AddressType;
 import kkramarenko.ecommerceapp.enums.OrderStatus;
 import kkramarenko.ecommerceapp.repository.AddressRepository;
 import kkramarenko.ecommerceapp.repository.CustomerRepository;
@@ -57,8 +58,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         if (existingShippingAddress != null){
             order.setShippingAddress(existingShippingAddress);
         } else {
-            Address savedShippingAddress = addressRepository.save(shippingAddress);
-            order.setShippingAddress(savedShippingAddress);
+            saveAndSetAddress(order, shippingAddress, AddressType.SHIPPING_ADDRESS);
         }
 
         Address existingBillingAddress = addressRepository.findAddressByCityAndCountryAndStateAndStreetAndZipCode(
@@ -67,8 +67,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         if (existingBillingAddress != null){
             order.setBillingAddress(existingBillingAddress);
         } else {
-            Address savedBillingAddress = addressRepository.save(billingAddress);
-            order.setBillingAddress(savedBillingAddress);
+            saveAndSetAddress(order, billingAddress, AddressType.BILLING_ADDRESS);
         }
 
 
@@ -76,8 +75,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
 
         Customer customer = purchase.getCustomer();
-        System.out.println(customer);
-        
+
         Customer existingCustomer = customerRepository.findCustomerByFirstNameAndLastNameAndEmail(
                     customer.getFirstName(), customer.getLastName(), customer.getEmail());
 
@@ -97,5 +95,14 @@ public class CheckoutServiceImpl implements CheckoutService {
     private String generateOrderTrackingNumber() {
 
          return UUID.randomUUID().toString();
+    }
+
+    private void saveAndSetAddress(Order order, Address address, AddressType addressType){
+        Address savedAddress = addressRepository.save(address);
+        if(addressType.equals(AddressType.SHIPPING_ADDRESS)) {
+            order.setShippingAddress(savedAddress);
+        } else {
+            order.setBillingAddress(savedAddress);
+        }
     }
 }
