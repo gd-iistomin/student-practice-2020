@@ -1,6 +1,8 @@
 package kkramarenko.ecommerceapp.controller;
 
+import kkramarenko.ecommerceapp.dto.RegistrationResponse;
 import kkramarenko.ecommerceapp.entity.User;
+import kkramarenko.ecommerceapp.enums.UserRegistrationStatus;
 import kkramarenko.ecommerceapp.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,22 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RegistrationController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public RegistrationController(UserService userService) {
         this.userService = userService;
     }
 
 
-
     @PostMapping("/users")
-    public ResponseEntity createUser(@RequestBody User user) {
-        boolean successfullySavedNewUser = userService.registerUser(user);
+    public ResponseEntity<RegistrationResponse> createUser(@RequestBody User user){
+        UserRegistrationStatus userRegistrationStatus = userService.registerUser(user);
 
-        if (successfullySavedNewUser) {
-            return new ResponseEntity(HttpStatus.CREATED);
+        if(userRegistrationStatus.equals(UserRegistrationStatus.OK)) {
+            return new ResponseEntity<>(new RegistrationResponse("Successfully created user."), HttpStatus.CREATED);
+        } else if (userRegistrationStatus.equals(UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME)){
+            return new ResponseEntity<>(new RegistrationResponse("Username already taken"), HttpStatus.IM_USED);
         } else {
-            return new ResponseEntity(HttpStatus.IM_USED);
+            return new ResponseEntity<>(new RegistrationResponse("Email already taken"), HttpStatus.IM_USED);
         }
     }
 

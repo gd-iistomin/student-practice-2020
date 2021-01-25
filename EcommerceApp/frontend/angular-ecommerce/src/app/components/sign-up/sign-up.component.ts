@@ -15,6 +15,8 @@ export class SignUpComponent implements OnInit {
 
   requestStatusCode: number = 0;
 
+  responseMessage: string = '';
+
 
 
   constructor(private formBuilder: FormBuilder, private registrationService: RegistrationService, private router: Router) { }
@@ -52,6 +54,9 @@ export class SignUpComponent implements OnInit {
     this.registrationService.createUser(user).subscribe( Response => 
       {
         this.requestStatusCode = Response.status;
+        this.responseMessage = Response.body.message;
+        
+
     });
 
 
@@ -63,7 +68,7 @@ export class SignUpComponent implements OnInit {
     }
 
 
-    // if 400(Status code == BAD_REQUEST), then show alert that user with matchinh username/email already exists (ngIf in html)
+    // if 226(Status code == IM_USED), then show alert that user with matchinh username/email already exists (ngIf in html)
 
     
   }

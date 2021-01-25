@@ -14,7 +14,7 @@ export class RegistrationService {
   constructor(private httpClient: HttpClient) { }
 
   // post new User object to backend
-  createUser(theUser: User): Observable<HttpResponse<User>> {
+  createUser(theUser: User): Observable<HttpResponse<any>> {
 
     const userCreationUrl = `http://localhost:8000/api/users`;
 

@@ -8,7 +8,7 @@
           <!-- Show alert only if requestStatusCode is present -->
           <div *ngIf="requestStatusCode != null">
               <div *ngIf="requestStatusCode == 226" class="alert alert-warning col-md-12" role="alert">
-                  This username/email already exists.
+                  {{ responseMessage }}
               </div>
           </div>
 

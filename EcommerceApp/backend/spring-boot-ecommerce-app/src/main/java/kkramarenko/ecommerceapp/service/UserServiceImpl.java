@@ -3,6 +3,7 @@ package kkramarenko.ecommerceapp.service;
 import kkramarenko.ecommerceapp.dto.UserDetails;
 import kkramarenko.ecommerceapp.entity.Customer;
 import kkramarenko.ecommerceapp.entity.User;
+import kkramarenko.ecommerceapp.enums.UserRegistrationStatus;
 import kkramarenko.ecommerceapp.repository.CustomerRepository;
 import kkramarenko.ecommerceapp.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,26 +30,25 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Saves new user to db
-     * <p>
-     * Checks if user with matching username/email exists, if so, aborts creation, returns false
+     *
+     * Checks if user with matching username/email exists, if so, aborts creation, returns
+     * UserRegistrationStatus containing explanation why registration has failed
+     * @see UserRegistrationStatus
      * If no user with matching fields exist, creates new customer, based on user's info, binds
      * that customer to user, cyphers password, saves user
      *
      * @param user - new user to save in database
-     * @return boolean - true on success, false on fail
+     * @return UserRegistrationStatus - OK on success, FOUND_USER_WITH_MATCHING_USERNAME or FOUND_USER_WITH_MATCHING_EMAIL on fail
      */
     @Override
     @Transactional
-    @SuppressWarnings("checkstyle:todocomment")
-    public boolean registerUser(User user) {
+    public UserRegistrationStatus registerUser(User user) {
         User userWithMatchingUsername = userRepository.findUserByUsername(user.getUsername());
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
 
 
-        //TODO: Consider informing user whether username or email is already used
-        if (userWithMatchingUsername != null || userWithMatchingEmail != null) {
-            return false;
-        }
+        if(userWithMatchingUsername != null){ return UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME; }
+        if(userWithMatchingEmail != null){ return UserRegistrationStatus.FOUND_USER_WITH_MATCHING_EMAIL; }
 
         Customer newCustomer = new Customer();
         newCustomer.setFirstName(user.getFirstName());
@@ -62,19 +62,19 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(pass));
 
         userRepository.save(user);
-        return true;
+        return UserRegistrationStatus.OK;
     }
 
 
     /**
      * Gets user details by username
-     * <p>
+     *
      * If user with given username doesn't exist, returns empty Optional
      * else, populates UserDetails object with user data, returns Optional with UserDetails
+     * @see UserDetails
      *
      * @param username - username of target user
      * @return Optional<UserDetails>
-     * @see UserDetails
      */
     @Override
     public Optional<UserDetails> getUserDetails(String username) {
