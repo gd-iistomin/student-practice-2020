@@ -1,0 +1,15 @@
+<div class="adm-dashboard">
+    <div class="container-fluid">
+
+    <!-- Warnining for anauthorized visitors -->
+    <div *ngIf="!authenticated() || getAuthority() != 'ADMIN'">   
+      <div class="alert alert-danger">
+        <strong>Permission denied.</strong>
+      </div>
+    </div>
+
+    <!-- Admin dashboard -->
+    <div *ngIf="authenticated() && getAuthority() == 'ADMIN'">
+        <div><p>Admin Dashboard</p></div>
+    </div>
+</div>        

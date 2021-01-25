@@ -14,7 +14,7 @@
             <column  name="first_name"  value="Test"/>
             <column  name="last_name"  value="User"/>
             <column  name="email"  value="testuser@test.com"/>
-            <column name="authority" value="USER"/>
+            <column name="authority" value="ADMIN"/>
             <column name="discount_rate" value="starter"/>
             <column name="customer_id" value="1"/>
         </insert>

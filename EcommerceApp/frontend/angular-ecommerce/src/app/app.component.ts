@@ -12,4 +12,8 @@ export class AppComponent {
   constructor(private authenticationService: AuthenticationService){}
 
   authenticated() { return this.authenticationService.authenticated.value; }
+
+  getAuthority() {
+     return this.authenticationService.authority.value;
+  }
 }

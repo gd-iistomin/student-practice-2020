@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   authenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   username: string;
-  authority: string = '';
+  authority: BehaviorSubject<string> = new BehaviorSubject<string>('none');
 
   userDetails: Observable<UserDetails> = of(null);
 
@@ -36,7 +36,7 @@ export class AuthenticationService {
 
                 const authorities: string[] = response['authorities']; 
                 if (authorities.length > 0){
-                    this.authority = authorities[0];
+                    this.authority.next(authorities[0]['authority']);
                 }
 
                 return callback && callback();
