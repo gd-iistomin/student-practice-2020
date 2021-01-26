@@ -30,6 +30,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { UserOrdersListComponent } from './components/user-orders-list/user-orders-list.component';
 import { AdminButtonsComponent } from './components/admin-buttons/admin-buttons.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { ItemCreationComponent } from './components/item-creation/item-creation.component';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -43,6 +44,7 @@ export class XhrInterceptor implements HttpInterceptor {
 }
 
 const routes: Routes =[
+  {path: 'create-new-item', component: ItemCreationComponent},
   {path: 'admin-dashboard', component: AdminDashboardComponent},
   {path: 'show-user-orders', component: UserOrdersListComponent},
   {path: 'sign-up', component: SignUpComponent},
@@ -77,7 +79,8 @@ const routes: Routes =[
     SignUpComponent,
     UserOrdersListComponent,
     AdminButtonsComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ItemCreationComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

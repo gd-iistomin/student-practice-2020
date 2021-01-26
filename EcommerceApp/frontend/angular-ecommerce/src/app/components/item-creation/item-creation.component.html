@@ -1,6 +1,6 @@
-<div class="adm-dashboard">
+<div class="item-creation">
     <div class="container-fluid">
-
+       
     <!-- Warnining for anauthorized visitors -->
     <div *ngIf="!authenticated() || getAuthority() != 'ADMIN'">   
       <div class="alert alert-danger">
@@ -11,10 +11,8 @@
     <!-- Admin dashboard -->
     <div *ngIf="authenticated() && getAuthority() == 'ADMIN'">
         <div>
-          <p>Admin Dashboard</p>
-          <a routerLink="/create-new-item">
-            <button class="btn btn-primary btn-sm mb-4">Add new Item</button>
-          </a>
+            <p>item-creation works!</p>
         </div>
     </div>
 </div>        
+
