@@ -32,6 +32,7 @@ import { AdminButtonsComponent } from './components/admin-buttons/admin-buttons.
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { ItemCreationComponent } from './components/item-creation/item-creation.component';
 import { ItemDisableComponent } from './components/item-disable/item-disable.component';
+import { ItemEnableComponent } from './components/item-enable/item-enable.component';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -45,6 +46,7 @@ export class XhrInterceptor implements HttpInterceptor {
 }
 
 const routes: Routes =[
+  {path: 'enable-item', component: ItemEnableComponent},
   {path: 'disable-item', component: ItemDisableComponent},
   {path: 'create-new-item', component: ItemCreationComponent},
   {path: 'admin-dashboard', component: AdminDashboardComponent},
@@ -83,7 +85,8 @@ const routes: Routes =[
     AdminButtonsComponent,
     AdminDashboardComponent,
     ItemCreationComponent,
-    ItemDisableComponent
+    ItemDisableComponent,
+    ItemEnableComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

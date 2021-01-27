@@ -32,7 +32,7 @@ export class ProductService {
   getProductListPaginate(thePage: number,
                         thePageSize: number,
                         theCategoryId: number): Observable<GetResponseProducts>{
-    const listProductsByCategoryPaginationUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}&page=${thePage}&size=${thePageSize}`
+    const listProductsByCategoryPaginationUrl = `${this.baseUrl}/search/findByCategoryIdAndActiveIsTrue?id=${theCategoryId}&page=${thePage}&size=${thePageSize}`
     
     return this.httpClient.get<GetResponseProducts>(listProductsByCategoryPaginationUrl);
   }
@@ -61,6 +61,14 @@ export class ProductService {
                                                                                     &size=${this.pageMaxSize}`;
     
     return this.getProducts(listActiveProductsByCategoryUrl);
+  }
+
+  getDisabledProducts(categoryId: number): Observable<Product[]>{
+    // size set to maxsize(1000) to get all disabled products
+    const listInactiveProductsByCategoryUrl = `${this.baseUrl}/search/findByCategoryIdAndActiveIsFalse?id=${categoryId}
+                                                                                    &size=${this.pageMaxSize}`;
+    
+    return this.getProducts(listInactiveProductsByCategoryUrl);
   }
 
   getProducts(Url: string): Observable<Product[]>{

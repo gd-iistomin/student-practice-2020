@@ -6,7 +6,7 @@
                 <!-- loop over the collection of products -->
 
                 <div *ngFor="let tempProduct of products" class="col-md-3">
-                    <div class="product-box">
+                    <div class="product-box" *ngIf="tempProduct.active == true">
                         <!-- Link to product details on the image and product name -->
                         <a routerLink="/products/{{ tempProduct.id }}">
                             <img src="{{ tempProduct.imageUrl }}" class="img-responsive">
