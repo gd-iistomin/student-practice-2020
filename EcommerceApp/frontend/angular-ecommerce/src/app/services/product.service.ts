@@ -21,6 +21,12 @@ export class ProductService {
     return this.httpClient.get<Product>(productUrl);
   }
 
+  createProduct(theProduct: Product): Observable<any>{
+    const productCreationUrl = 'http://localhost:8000/api/create-new-item';
+
+    return this.httpClient.post<Product>(productCreationUrl, theProduct);
+  }
+
   getProductListPaginate(thePage: number,
                         thePageSize: number,
                         theCategoryId: number): Observable<GetResponseProducts>{
