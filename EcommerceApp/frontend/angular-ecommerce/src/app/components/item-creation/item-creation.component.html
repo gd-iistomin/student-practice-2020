@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <!-- Admin dashboard -->
+      <!-- Creating item section -->
       <div *ngIf="authenticated() && getAuthority() == 'ADMIN'">
           <div>
             <form [formGroup]="newItemFormGroup" (ngSubmit)="createItem()">

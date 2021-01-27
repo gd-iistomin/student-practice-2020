@@ -59,7 +59,6 @@ export class ItemCreationComponent implements OnInit {
     product.category = new ProductCategory();
 
     const productCategoryId: number = +this.newItemFormGroup.controls['category'].value;
-    console.log("category =" + productCategoryId)
     for (let tempcategory of this.productCategories) {
       if(tempcategory.id == productCategoryId){
         product.category.id = tempcategory.id;
@@ -67,7 +66,6 @@ export class ItemCreationComponent implements OnInit {
       }
     }
     
-    console.log(product)
     this.productService.createProduct(product).subscribe({ 
       next: response => {
             alert('Product has been created.');
