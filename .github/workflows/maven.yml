@@ -35,6 +35,5 @@ jobs:
         run: |
           cd EcommerceApp/backend/spring-boot-ecommerce-app/src/main/docker/
           docker-compose up -d db-test
-          sleep 20
-          cd ../../../
-          mvn -B package --file pom.xml
+          chmod +x wait-for-it.sh
+          ./wait-for-it.sh 3306:3306 -t 60 -- mvn -B package --file ../../../pom.xml
