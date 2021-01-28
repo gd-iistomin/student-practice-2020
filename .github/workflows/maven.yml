@@ -34,7 +34,7 @@ jobs:
       - name: Step 3 - Start docker service db-test for test bd access, Go to backend project root and build maven project
         run: |
           cd EcommerceApp/backend/spring-boot-ecommerce-app/src/main/docker/
-          docker-compose up db-test
+          docker-compose up -d db-test
           sleep 20
           cd ../../../
           mvn -B package --file pom.xml
