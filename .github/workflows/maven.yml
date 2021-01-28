@@ -27,5 +27,7 @@ jobs:
         with:
           java-version: '11'
            
-      - name: Step 3 - Build Maven project
-        run: mvn -B package --file pom.xml
+      - name: Step 3 - Go to backend project root and build maven project
+        run: |
+          cd EcommerceApp/backend/spring-boot-ecommerce-app/
+          mvn -B package --file pom.xml
