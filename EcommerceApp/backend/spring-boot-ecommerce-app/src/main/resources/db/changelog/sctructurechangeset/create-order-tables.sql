@@ -53,8 +53,6 @@ CREATE TABLE `orders` (
   `date_created` datetime(6) DEFAULT NULL,
   `last_updated` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_billing_address_id` (`billing_address_id`),
-  UNIQUE KEY `UK_shipping_address_id` (`shipping_address_id`),
   KEY `K_customer_id` (`customer_id`),
   CONSTRAINT `FK_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   CONSTRAINT `FK_billing_address_id` FOREIGN KEY (`billing_address_id`) REFERENCES `address` (`id`),
