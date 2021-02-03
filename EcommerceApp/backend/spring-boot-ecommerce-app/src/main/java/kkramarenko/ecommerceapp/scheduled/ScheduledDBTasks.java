@@ -40,6 +40,7 @@ public class ScheduledDBTasks {
      */
 
     @Scheduled(fixedRate = HALF_AN_HOUR_IN_MILLISECONDS)
+    @SuppressWarnings("checkstyle:todocomment")
     public void checkOrderStatus() {
 
         List<Order> orders = orderRepository.findAll();
@@ -68,6 +69,7 @@ public class ScheduledDBTasks {
                         break;
                     default:
                         // todo think of default behaviour
+
                 }
             }
             tempOrder.setStatus(orderStatus.toString());
