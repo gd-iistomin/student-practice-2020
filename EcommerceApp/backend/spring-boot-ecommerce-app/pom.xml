@@ -102,8 +102,6 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <failsOnError>false</failsOnError>
-                    <failOnViolation>false</failOnViolation>
                     <configLocation>src/main/resources/checkstyle-config/checkstyle.xml</configLocation>
                     <suppressionsLocation>
                         src/main/resources/checkstyle-config/checkstyle-suppressions.xml
@@ -114,41 +112,48 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>checkstyle</id>
+                        <phase>validate</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
+                        <configuration>
+                            <violationSeverity>warning</violationSeverity>
+                            <failsOnError>false</failsOnError>
+                            <failOnViolation>false</failOnViolation>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
 
-<!--    <reporting>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-pmd-plugin</artifactId>-->
-<!--                <version>3.14.0</version>-->
-<!--                <configuration>-->
-<!--                    <rulesets>-->
-<!--                        <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>-->
-<!--                    </rulesets>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
-<!--                <version>3.1.2</version>-->
-<!--                <configuration>-->
-<!--                    <suppressionsLocation>-->
-<!--                        src/main/resources/checkstyle-config/checkstyle-suppressions.xml-->
-<!--                    </suppressionsLocation>-->
-<!--                    <suppressionsFileExpression>-->
-<!--                        checkstyle.suppressions.file-->
-<!--                    </suppressionsFileExpression>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </reporting>-->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <suppressionsLocation>
+                        src/main/resources/checkstyle-config/checkstyle-suppressions.xml
+                    </suppressionsLocation>
+                    <suppressionsFileExpression>
+                        checkstyle.suppressions.file
+                    </suppressionsFileExpression>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
