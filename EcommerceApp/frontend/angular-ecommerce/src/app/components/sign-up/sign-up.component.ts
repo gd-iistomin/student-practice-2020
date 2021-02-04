@@ -45,7 +45,7 @@ export class SignUpComponent implements OnInit {
 
     //set default role of "USER" and discount rate of "starter"
     user.authority = "USER";
-    user.discountRate = "starter";
+    user.discountRate = "STARTER";
 
     // post User via registration service
     // get the status code:
