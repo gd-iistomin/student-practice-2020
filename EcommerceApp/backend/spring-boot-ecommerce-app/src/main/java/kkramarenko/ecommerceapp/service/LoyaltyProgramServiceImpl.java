@@ -20,36 +20,38 @@ public class LoyaltyProgramServiceImpl implements LoyaltyProgramService {
 
     /**
      * Used after new purchase for some customer is saved to database
-     *
+     * <p>
      * Checks if sum of all customer orders' totalPrice is more than some value,
      * return customer's current discount rate based on that
-     * @see DiscountRate
      *
      * @param customer - customer to check discount rate
      * @return DiscountRate
+     * @see DiscountRate
      */
     @Override
     public DiscountRate getCustomerCurrentDiscountRate(Customer customer) {
 
         List<Order> customerOrders = orderRepository.findOrdersByCustomer(customer);
 
-        if(customerOrders.size() == 0) { return DiscountRate.starter; }
+        if (customerOrders.size() == 0) {
+            return DiscountRate.STARTER;
+        }
 
         BigDecimal customerOrdersTotalPriceSum = new BigDecimal("0.00");
-        for(Order order: customerOrders){
+        for (Order order : customerOrders) {
             customerOrdersTotalPriceSum = customerOrdersTotalPriceSum.add(order.getTotalPrice());
         }
 
-        if(customerOrdersTotalPriceSum.compareTo(new BigDecimal("100.00")) < 0){
-            return DiscountRate.starter;
-        } else if (customerOrdersTotalPriceSum.compareTo(new BigDecimal("250.00")) < 0) {
-            return DiscountRate.bronze;
-        } else if (customerOrdersTotalPriceSum.compareTo(new BigDecimal("500.00")) < 0) {
-            return DiscountRate.silver;
-        } else if (customerOrdersTotalPriceSum.compareTo(new BigDecimal("1000.00")) < 0) {
-            return DiscountRate.gold;
+        if (customerOrdersTotalPriceSum.compareTo(DiscountRate.BRONZE.getTargetPurchasesSum()) < 0) {
+            return DiscountRate.STARTER;
+        } else if (customerOrdersTotalPriceSum.compareTo(DiscountRate.SILVER.getTargetPurchasesSum()) < 0) {
+            return DiscountRate.BRONZE;
+        } else if (customerOrdersTotalPriceSum.compareTo(DiscountRate.GOLD.getTargetPurchasesSum()) < 0) {
+            return DiscountRate.SILVER;
+        } else if (customerOrdersTotalPriceSum.compareTo(DiscountRate.PLATINUM.getTargetPurchasesSum()) < 0) {
+            return DiscountRate.GOLD;
         } else {
-            return DiscountRate.platinum;
+            return DiscountRate.PLATINUM;
         }
 
     }

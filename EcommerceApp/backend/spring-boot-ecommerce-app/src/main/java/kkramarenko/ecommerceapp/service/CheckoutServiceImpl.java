@@ -78,7 +78,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         boolean discountRateChanged = false;
         String newDiscountRate = "";
 
-        if(existingCustomer != null){
+        if (existingCustomer != null) {
             User userWithGivenCustomer = userRepository.findUserByCustomer(existingCustomer);
             if(userWithGivenCustomer == null) {
                 existingCustomer.add(order);
@@ -88,7 +88,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                 existingCustomer.add(order);
                 customerRepository.save(existingCustomer);
                 DiscountRate discountRateAfterPurchase = loyaltyProgramService.getCustomerCurrentDiscountRate(existingCustomer);
-                if(!(discountRateAfterPurchase.equals(discountRateBeforePurchase))) {
+                if (!(discountRateAfterPurchase.equals(discountRateBeforePurchase))) {
                     discountRateChanged = true;
                     newDiscountRate = discountRateAfterPurchase.toString();
                     userWithGivenCustomer.setDiscountRate(discountRateAfterPurchase.toString());
