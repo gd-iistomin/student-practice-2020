@@ -20,7 +20,7 @@ public class OrderController {
     }
 
     @GetMapping("/{trackingNumber}")
-    public Purchase getOrderDetails(@PathVariable String trackingNumber){
+    public Purchase getOrderDetails(@PathVariable String trackingNumber) {
         return orderService.getOrderDetailsByTrackingNumber(trackingNumber);
     }
 }

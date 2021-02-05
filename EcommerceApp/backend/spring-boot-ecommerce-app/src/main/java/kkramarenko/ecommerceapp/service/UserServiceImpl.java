@@ -14,14 +14,14 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository,
-                                CustomerRepository customerRepository) {
+                           CustomerRepository customerRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Saves new user to db
-     *
+     * <p>
      * Checks if user with matching username/email exists, if so, aborts creation, returns false
      * If no user with matching fields exist, creates new customer, based on user's info, binds
      * that customer to user, cyphers password, saves user
@@ -44,7 +44,9 @@ public class UserServiceImpl implements UserService {
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
 
         //TODO: Consider informing user whether username or email is already used
-        if(userWithMatchingUsername != null || userWithMatchingEmail != null){ return false; }
+        if (userWithMatchingUsername != null || userWithMatchingEmail != null) {
+            return false;
+        }
 
         Customer newCustomer = new Customer();
         newCustomer.setFirstName(user.getFirstName());
@@ -64,13 +66,13 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Gets user details by username
-     *
+     * <p>
      * If user with given username doesn't exist, returns empty Optional
      * else, populates UserDetails object with user data, returns Optional with UserDetails
-     * @see UserDetails
      *
      * @param username - username of target user
      * @return Optional<UserDetails>
+     * @see UserDetails
      */
     @Override
     public Optional<UserDetails> getUserDetails(String username) {
@@ -78,7 +80,9 @@ public class UserServiceImpl implements UserService {
 
         User targetUser = userRepository.findUserByUsername(username);
 
-        if (targetUser == null) { return userDetailsOptional; }
+        if (targetUser == null) {
+            return userDetailsOptional;
+        }
 
         UserDetails userDetails = new UserDetails();
         userDetails.setUsername(targetUser.getUsername());

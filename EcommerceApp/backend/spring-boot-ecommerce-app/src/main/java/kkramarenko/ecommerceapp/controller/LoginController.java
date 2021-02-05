@@ -23,7 +23,7 @@ public class LoginController {
     }
 
     @GetMapping("/user")
-    public Principal checkUser(Principal user){
+    public Principal checkUser(Principal user) {
         return user;
     }
 
@@ -40,7 +40,7 @@ public class LoginController {
      * @return ResponseEntity<UserDetails>
      */
     @GetMapping("/userdetails/{username}")
-    public ResponseEntity<UserDetails> getUserDetails(@PathVariable String username){
+    public ResponseEntity<UserDetails> getUserDetails(@PathVariable String username) {
         Optional<UserDetails> userDetailsOptional = userService.getUserDetails(username);
 
         return userDetailsOptional.map(userDetails -> new ResponseEntity<>(userDetails, HttpStatus.OK))

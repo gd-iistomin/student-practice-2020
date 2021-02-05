@@ -39,11 +39,11 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
-    public void add(Order order){
-        if(order == null){ return; }
+    public void add(Order order) {
+        if (order == null) { return; }
 
-        if(orders == null){
-            orders= new HashSet<>();
+        if (orders == null) {
+            orders = new HashSet<>();
         }
         orders.add(order);
         order.setCustomer(this);

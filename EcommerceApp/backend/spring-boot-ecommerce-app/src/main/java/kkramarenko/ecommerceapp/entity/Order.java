@@ -71,11 +71,13 @@ public class Order {
     @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
     private Address billingAddress;
 
-    public void add(OrderItem orderItem){
-        if(orderItem == null){ return; }
+    public void add(OrderItem orderItem) {
+        if (orderItem == null) {
+            return;
+        }
 
-        if(orderItems == null){
-            orderItems= new HashSet<>();
+        if (orderItems == null) {
+            orderItems = new HashSet<>();
         }
         orderItems.add(orderItem);
         orderItem.setOrder(this);
