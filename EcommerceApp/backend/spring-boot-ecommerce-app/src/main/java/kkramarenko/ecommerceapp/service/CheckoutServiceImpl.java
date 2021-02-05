@@ -2,7 +2,11 @@ package kkramarenko.ecommerceapp.service;
 
 import kkramarenko.ecommerceapp.dto.Purchase;
 import kkramarenko.ecommerceapp.dto.PurchaseResponse;
-import kkramarenko.ecommerceapp.entity.*;
+import kkramarenko.ecommerceapp.entity.Address;
+import kkramarenko.ecommerceapp.entity.Customer;
+import kkramarenko.ecommerceapp.entity.Order;
+import kkramarenko.ecommerceapp.entity.OrderItem;
+import kkramarenko.ecommerceapp.entity.User;
 import kkramarenko.ecommerceapp.enums.DiscountRate;
 import kkramarenko.ecommerceapp.enums.OrderStatus;
 import kkramarenko.ecommerceapp.repository.AddressRepository;

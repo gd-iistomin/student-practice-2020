@@ -6,7 +6,6 @@ import kkramarenko.ecommerceapp.repository.CustomerRepository;
 import kkramarenko.ecommerceapp.repository.OrderRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("http://localhost:4200")
