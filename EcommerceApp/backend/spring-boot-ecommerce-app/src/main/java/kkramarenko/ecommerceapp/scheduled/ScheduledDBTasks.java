@@ -23,6 +23,8 @@ public class ScheduledDBTasks {
 
     private final long HALF_AN_HOUR_IN_MILLISECONDS = 1800000L;
 
+    private final long ONE_DAY_IN_HOURS = 24L;
+
     /**
      * Checks and processes order status in database
      * Is invoked once in half an hour
@@ -53,14 +55,19 @@ public class ScheduledDBTasks {
             Duration delta = Duration.between(lastUpdatedDate.toInstant(), currentDate.toInstant());
             long hoursFromLastUpdate = delta.toHours();
 
-            if (hoursFromLastUpdate >= 24 && !(orderStatus.equals(OrderStatus.COMPLETED))) {
+            if (hoursFromLastUpdate >= ONE_DAY_IN_HOURS && !(orderStatus.equals(OrderStatus.COMPLETED))) {
                 switch (orderStatus) {
                     case CREATED:
                         orderStatus = OrderStatus.PROCESSING;
+                        break;
                     case PROCESSING:
                         orderStatus = OrderStatus.SHIPPING;
+                        break;
                     case SHIPPING:
                         orderStatus = OrderStatus.COMPLETED;
+                        break;
+                    default:
+                        // todo think of default behaviour
                 }
             }
             tempOrder.setStatus(orderStatus.toString());
