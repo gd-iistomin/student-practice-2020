@@ -17,7 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    // We used Bcrytp to cypher stored passwords, here implement Bcrytp to match plain text pass from login form to cyphered one in db
+    // We used Bcrypt to cypher stored passwords, here implement Bcrypt
+    // to match plain text pass from login form to cyphered one in db
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();

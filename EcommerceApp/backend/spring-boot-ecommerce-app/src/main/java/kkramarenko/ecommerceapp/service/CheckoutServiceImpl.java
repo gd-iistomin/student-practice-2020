@@ -25,7 +25,8 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     private final LoyaltyProgramService loyaltyProgramService;
 
-    public CheckoutServiceImpl(CustomerRepository customerRepository, AddressRepository addressRepository, UserRepository userRepository, LoyaltyProgramService loyaltyProgramService) {
+    public CheckoutServiceImpl(CustomerRepository customerRepository, AddressRepository addressRepository,
+                                    UserRepository userRepository, LoyaltyProgramService loyaltyProgramService) {
         this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
@@ -87,7 +88,8 @@ public class CheckoutServiceImpl implements CheckoutService {
                 DiscountRate discountRateBeforePurchase = DiscountRate.valueOf(userWithGivenCustomer.getDiscountRate());
                 existingCustomer.add(order);
                 customerRepository.save(existingCustomer);
-                DiscountRate discountRateAfterPurchase = loyaltyProgramService.getCustomerCurrentDiscountRate(existingCustomer);
+                DiscountRate discountRateAfterPurchase =
+                        loyaltyProgramService.getCustomerCurrentDiscountRate(existingCustomer);
                 if (!(discountRateAfterPurchase.equals(discountRateBeforePurchase))) {
                     discountRateChanged = true;
                     newDiscountRate = discountRateAfterPurchase.toString();

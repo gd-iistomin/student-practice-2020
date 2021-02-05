@@ -43,6 +43,7 @@ public class LoginController {
     public ResponseEntity<UserDetails> getUserDetails(@PathVariable String username){
         Optional<UserDetails> userDetailsOptional = userService.getUserDetails(username);
 
-        return userDetailsOptional.map(userDetails -> new ResponseEntity<>(userDetails, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
+        return userDetailsOptional.map(userDetails -> new ResponseEntity<>(userDetails, HttpStatus.OK))
+                            .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
     }
 }
