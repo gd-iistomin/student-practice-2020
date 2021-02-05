@@ -40,7 +40,9 @@ public class Customer {
     private Set<Order> orders = new HashSet<>();
 
     public void add(Order order) {
-        if (order == null) { return; }
+        if (order == null) {
+            return;
+        }
 
         if (orders == null) {
             orders = new HashSet<>();

@@ -30,7 +30,9 @@ public class UserOrdersController {
     public List<Order> getUserOrders(@PathVariable Long customerId) {
         Customer targetCustomer = customerRepository.findCustomerById(customerId);
 
-        if (targetCustomer == null) { return null; }
+        if (targetCustomer == null) {
+            return null;
+        }
 
         return orderRepository.findOrdersByCustomer(targetCustomer);
 

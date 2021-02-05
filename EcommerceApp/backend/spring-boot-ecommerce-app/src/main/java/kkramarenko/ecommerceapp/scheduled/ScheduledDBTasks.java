@@ -21,9 +21,9 @@ public class ScheduledDBTasks {
         this.orderRepository = orderRepository;
     }
 
-    private final long HALF_AN_HOUR_IN_MILLISECONDS = 1800000L;
+    private static final long HALF_AN_HOUR_IN_MILLISECONDS = 1800000L;
 
-    private final long ONE_DAY_IN_HOURS = 24L;
+    private static final long ONE_DAY_IN_HOURS = 24L;
 
     /**
      * Checks and processes order status in database
