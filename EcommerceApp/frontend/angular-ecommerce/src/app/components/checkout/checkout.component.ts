@@ -6,6 +6,7 @@ import { Order } from 'src/app/common/order';
 import { OrderItem } from 'src/app/common/order-item';
 import { Purchase } from 'src/app/common/purchase';
 import { State } from 'src/app/common/state';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { EcommerceShopFormService } from 'src/app/services/ecommerce-shop-form.service';
@@ -20,6 +21,10 @@ export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup: FormGroup;
 
+  userFirstNameInitValue: string = '';
+  userLastNameInitValue: string = '';
+  userEmailInitValue: string = '';
+
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
@@ -31,7 +36,8 @@ export class CheckoutComponent implements OnInit {
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private authenticationService: AuthenticationService,
+              private formBuilder: FormBuilder,
               private ecommerceShopFormService: EcommerceShopFormService,
               private cartService: CartService,
               private checkoutService: CheckoutService,
@@ -42,12 +48,21 @@ export class CheckoutComponent implements OnInit {
     // getting totals
     this.reviewCartDetails();
 
+    // if user is authenticated, get his details, populate customer form field based on that
+    if(this.authenticated()){
+      this.authenticationService.userDetails.subscribe( data => {
+        this.userFirstNameInitValue = data.firstName;
+        this.userLastNameInitValue = data.lastName;
+        this.userEmailInitValue = data.email;
+      });
+    }
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         // all fields in the form are represented by FormControl, we specify initial value: '' and validators for the given field. 
-        firstName: new FormControl('', [Validators.required, Validators.minLength(2), EcommerceShopValidators.notOnlyWhitespace]),
-        lastName: new FormControl('', [Validators.required, Validators.minLength(2), EcommerceShopValidators.notOnlyWhitespace]),
-        email: new FormControl('', [Validators.required, 
+        firstName: new FormControl(this.userFirstNameInitValue, [Validators.required, Validators.minLength(2), EcommerceShopValidators.notOnlyWhitespace]),
+        lastName: new FormControl(this.userLastNameInitValue, [Validators.required, Validators.minLength(2), EcommerceShopValidators.notOnlyWhitespace]),
+        email: new FormControl(this.userEmailInitValue, [Validators.required, 
                                     Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
@@ -258,5 +273,7 @@ export class CheckoutComponent implements OnInit {
 
     this.cartService.totalQuantity.subscribe(data => { this.totalQuantity = data });
   }
+
+  authenticated() { return this.authenticationService.authenticated.value; }
 
 }
