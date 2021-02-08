@@ -16,6 +16,7 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 
 
@@ -79,6 +80,7 @@ const routes: Routes =[
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
+    ShowHidePasswordModule
   ],
   providers: [ProductService, AuthenticationService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
   bootstrap: [AppComponent]

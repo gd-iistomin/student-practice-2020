@@ -26,16 +26,20 @@ Install ng-bootstrap
 Execute this in IDE terminal - ng add @angular/localize
 after that - npm install --force @ng-bootstrap/ng-bootstrap@7.0.0
 
-# Step 6 
+# Step 6
+Install ngx-show-hide-password 
+Execute this in IDE terminal - npm install --force ngx-show-hide-password 
+
+# Step 7
 Run project!
 Type this in IDE Terminal - ng serve --open
+
 
 
 # Additional Project info
 This project was generated with Angular CLI version 11.0.4.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
 
 
 
