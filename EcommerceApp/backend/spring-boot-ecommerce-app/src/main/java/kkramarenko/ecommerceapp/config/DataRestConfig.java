@@ -50,6 +50,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         exposeIds(config);
     }
 
+    @SuppressWarnings("PMD.UseVarargs")
     private void disableHttpMethods(Class targetClass, RepositoryRestConfiguration config,
                                                         HttpMethod[] theUnsupportedActions) {
         config.getExposureConfiguration()

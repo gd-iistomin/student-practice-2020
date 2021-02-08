@@ -39,9 +39,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
+    @SuppressWarnings("checkstyle:todocomment")
     public boolean registerUser(User user) {
         User userWithMatchingUsername = userRepository.findUserByUsername(user.getUsername());
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
+
 
         //TODO: Consider informing user whether username or email is already used
         if (userWithMatchingUsername != null || userWithMatchingEmail != null) {

@@ -6,5 +6,7 @@
 
 <suppressions>
     <suppress checks="Javadoc" files="."/>
-    <suppress files="SpringBootEcommerceAppApplication.java" checks="HideUtilityClassConstructor" />
+    <suppress checks="HideUtilityClassConstructor" files="SpringBootEcommerceAppApplication.java" />
+    <suppress checks="DesignForExtension" files="."/>
+    <suppress checks="FinalParameters" files="."/>
 </suppressions>
