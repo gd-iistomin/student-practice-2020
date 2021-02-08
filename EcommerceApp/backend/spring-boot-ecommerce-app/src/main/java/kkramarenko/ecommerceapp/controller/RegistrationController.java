@@ -25,12 +25,12 @@ public class RegistrationController {
 
 
     @PostMapping("/users")
-    public ResponseEntity<RegistrationResponse> createUser(@RequestBody User user){
+    public ResponseEntity<RegistrationResponse> createUser(@RequestBody User user) {
         UserRegistrationStatus userRegistrationStatus = userService.registerUser(user);
 
-        if(userRegistrationStatus.equals(UserRegistrationStatus.OK)) {
+        if (userRegistrationStatus.equals(UserRegistrationStatus.OK)) {
             return new ResponseEntity<>(new RegistrationResponse("Successfully created user."), HttpStatus.CREATED);
-        } else if (userRegistrationStatus.equals(UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME)){
+        } else if (userRegistrationStatus.equals(UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME)) {
             return new ResponseEntity<>(new RegistrationResponse("Username already taken"), HttpStatus.IM_USED);
         } else {
             return new ResponseEntity<>(new RegistrationResponse("Email already taken"), HttpStatus.IM_USED);

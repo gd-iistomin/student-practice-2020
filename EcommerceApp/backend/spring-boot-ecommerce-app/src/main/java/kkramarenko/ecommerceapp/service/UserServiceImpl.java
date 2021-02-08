@@ -30,15 +30,16 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Saves new user to db
-     *
+     * <p>
      * Checks if user with matching username/email exists, if so, aborts creation, returns
      * UserRegistrationStatus containing explanation why registration has failed
+     *
+     * @param user - new user to save in database
+     * @return UserRegistrationStatus - OK on success,
+     * FOUND_USER_WITH_MATCHING_USERNAME or FOUND_USER_WITH_MATCHING_EMAIL on fail
      * @see UserRegistrationStatus
      * If no user with matching fields exist, creates new customer, based on user's info, binds
      * that customer to user, cyphers password, saves user
-     *
-     * @param user - new user to save in database
-     * @return UserRegistrationStatus - OK on success, FOUND_USER_WITH_MATCHING_USERNAME or FOUND_USER_WITH_MATCHING_EMAIL on fail
      */
     @Override
     @Transactional
@@ -47,8 +48,12 @@ public class UserServiceImpl implements UserService {
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
 
 
-        if(userWithMatchingUsername != null){ return UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME; }
-        if(userWithMatchingEmail != null){ return UserRegistrationStatus.FOUND_USER_WITH_MATCHING_EMAIL; }
+        if (userWithMatchingUsername != null) {
+            return UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME;
+        }
+        if (userWithMatchingEmail != null) {
+            return UserRegistrationStatus.FOUND_USER_WITH_MATCHING_EMAIL;
+        }
 
         Customer newCustomer = new Customer();
         newCustomer.setFirstName(user.getFirstName());
@@ -68,13 +73,13 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Gets user details by username
-     *
+     * <p>
      * If user with given username doesn't exist, returns empty Optional
      * else, populates UserDetails object with user data, returns Optional with UserDetails
-     * @see UserDetails
      *
      * @param username - username of target user
      * @return Optional<UserDetails>
+     * @see UserDetails
      */
     @Override
     public Optional<UserDetails> getUserDetails(String username) {
