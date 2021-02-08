@@ -3,6 +3,7 @@ package kkramarenko.ecommerceapp.service;
 import kkramarenko.ecommerceapp.entity.Customer;
 import kkramarenko.ecommerceapp.entity.User;
 import kkramarenko.ecommerceapp.enums.DiscountRate;
+import kkramarenko.ecommerceapp.enums.UserRegistrationStatus;
 import kkramarenko.ecommerceapp.repository.CustomerRepository;
 import kkramarenko.ecommerceapp.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +54,7 @@ class UserServiceImplTest {
         user1.setUsername("test1");
         user1.setPassword("bchbYGY65r");
         user1.setAuthority("USER");
-        user1.setDiscountRate(DiscountRate.bronze.toString());
+        user1.setDiscountRate(DiscountRate.BRONZE.toString());
 
 
         user2 = new User();
@@ -64,7 +65,7 @@ class UserServiceImplTest {
         user2.setUsername("hjvcv");
         user2.setPassword("bHVJC$24");
         user2.setAuthority("USER");
-        user2.setDiscountRate(DiscountRate.silver.toString());
+        user2.setDiscountRate(DiscountRate.SILVER.toString());
 
     }
 
@@ -117,10 +118,13 @@ class UserServiceImplTest {
         when(userRepository.save(userArgumentCaptor.capture())).thenReturn(null);
 
         assertAll(
-                () -> assertFalse(userService.registerUser(testUser1)),
-                () -> assertFalse(userService.registerUser(testUser2)),
-                () -> assertFalse(userService.registerUser(testUser3)),
-                () -> assertTrue(userService.registerUser(testUser4))
+                () -> assertEquals(UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME,
+                                            userService.registerUser(testUser1)),
+                () -> assertEquals(UserRegistrationStatus.FOUND_USER_WITH_MATCHING_EMAIL,
+                                            userService.registerUser(testUser2)),
+                () -> assertEquals(UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME,
+                                            userService.registerUser(testUser3)),
+                () -> assertEquals(UserRegistrationStatus.OK, userService.registerUser(testUser4))
             );
 
 
