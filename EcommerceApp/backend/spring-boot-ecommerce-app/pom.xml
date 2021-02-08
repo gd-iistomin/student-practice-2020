@@ -121,8 +121,8 @@
                         </goals>
                         <configuration>
                             <violationSeverity>warning</violationSeverity>
-                            <failsOnError>false</failsOnError>
-                            <failOnViolation>false</failOnViolation>
+                            <failsOnError>true</failsOnError>
+                            <failOnViolation>true</failOnViolation>
                         </configuration>
                     </execution>
                 </executions>
@@ -144,7 +144,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <failOnViolation>false</failOnViolation>
+                            <failOnViolation>true</failOnViolation>
                         </configuration>
                     </execution>
                 </executions>
