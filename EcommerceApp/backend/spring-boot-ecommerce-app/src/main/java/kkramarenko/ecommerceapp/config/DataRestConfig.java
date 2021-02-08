@@ -50,7 +50,9 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         exposeIds(config);
     }
 
-    private void disableHttpMethods(Class targetClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+    @SuppressWarnings("PMD.UseVarargs")
+    private void disableHttpMethods(Class targetClass, RepositoryRestConfiguration config,
+                                                        HttpMethod[] theUnsupportedActions) {
         config.getExposureConfiguration()
                 .forDomainType(targetClass)
                 .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
@@ -68,7 +70,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         List<Class> entityClasses = new ArrayList<>();
 
         // get entity types for entities
-        for(EntityType tempEntityType: entities){
+        for (EntityType tempEntityType: entities) {
             entityClasses.add(tempEntityType.getJavaType());
         }
 

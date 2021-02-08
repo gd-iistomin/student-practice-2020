@@ -33,7 +33,7 @@ public class LoyaltyProgramServiceImpl implements LoyaltyProgramService {
 
         List<Order> customerOrders = orderRepository.findOrdersByCustomer(customer);
 
-        if (customerOrders.size() == 0) {
+        if (customerOrders.isEmpty()) {
             return DiscountRate.STARTER;
         }
 

@@ -4,7 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,11 +39,13 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
-    public void add(Order order){
-        if(order == null){ return; }
+    public void add(Order order) {
+        if (order == null) {
+            return;
+        }
 
-        if(orders == null){
-            orders= new HashSet<>();
+        if (orders == null) {
+            orders = new HashSet<>();
         }
         orders.add(order);
         order.setCustomer(this);

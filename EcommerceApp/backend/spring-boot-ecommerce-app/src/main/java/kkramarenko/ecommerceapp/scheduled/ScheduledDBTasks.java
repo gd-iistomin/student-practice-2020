@@ -15,32 +15,36 @@ import java.util.List;
 @Transactional
 public class ScheduledDBTasks {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public ScheduledDBTasks(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    private final long HALF_AN_HOUR_IN_MILLISECONDS = 1800000L;
+    private static final long HALF_AN_HOUR_IN_MILLISECONDS = 1800000L;
 
-    /** Checks and processes order status in database
+    private static final long ONE_DAY_IN_HOURS = 24L;
+
+    /**
+     * Checks and processes order status in database
      * Is invoked once in half an hour
-     *
+     * <p>
      * Every 24h order status should be updated to next status from OrderStatus enum,
      * until order is COMPLETED
-     * @see OrderStatus
      *
+     * @see OrderStatus
+     * <p>
      * gets all orders, loops through them, checks time delta between current time and
      * last_updated time, if 24 hours have passed, then changes order status to next,
      * if order is not COMPLETED yet.
      */
 
     @Scheduled(fixedRate = HALF_AN_HOUR_IN_MILLISECONDS)
-    public void checkOrderStatus(){
+    public void checkOrderStatus() {
 
         List<Order> orders = orderRepository.findAll();
 
-        for(Order tempOrder: orders){
+        for (Order tempOrder : orders) {
             //since some statuses were stored lowercase, convert to UpperCase
             OrderStatus orderStatus = OrderStatus.valueOf(tempOrder.getStatus().toUpperCase());
 
@@ -51,14 +55,19 @@ public class ScheduledDBTasks {
             Duration delta = Duration.between(lastUpdatedDate.toInstant(), currentDate.toInstant());
             long hoursFromLastUpdate = delta.toHours();
 
-            if (hoursFromLastUpdate >= 24 && !(orderStatus.equals(OrderStatus.COMPLETED))){
-                switch (orderStatus){
+            if (hoursFromLastUpdate >= ONE_DAY_IN_HOURS && !(orderStatus.equals(OrderStatus.COMPLETED))) {
+                switch (orderStatus) {
                     case CREATED:
                         orderStatus = OrderStatus.PROCESSING;
+                        break;
                     case PROCESSING:
                         orderStatus = OrderStatus.SHIPPING;
+                        break;
                     case SHIPPING:
                         orderStatus = OrderStatus.COMPLETED;
+                        break;
+                    default:
+                        // todo think of default behaviour
                 }
             }
             tempOrder.setStatus(orderStatus.toString());

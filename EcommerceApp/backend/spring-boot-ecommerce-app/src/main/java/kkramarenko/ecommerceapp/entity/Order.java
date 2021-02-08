@@ -6,7 +6,16 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -62,11 +71,13 @@ public class Order {
     @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
     private Address billingAddress;
 
-    public void add(OrderItem orderItem){
-        if(orderItem == null){ return; }
+    public void add(OrderItem orderItem) {
+        if (orderItem == null) {
+            return;
+        }
 
-        if(orderItems == null){
-            orderItems= new HashSet<>();
+        if (orderItems == null) {
+            orderItems = new HashSet<>();
         }
         orderItems.add(orderItem);
         orderItem.setOrder(this);
