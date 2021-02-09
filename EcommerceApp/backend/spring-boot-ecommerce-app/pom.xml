@@ -18,6 +18,34 @@
         <java.version>11</java.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+            <!-- Liquibase is only needed in production, if declared in shared dependencies,
+                    it will fail the test build because there's no configuration specified in test properties -->
+            <dependencies>
+                <dependency>
+                    <groupId>org.liquibase</groupId>
+                    <artifactId>liquibase-core</artifactId>
+                    <version>4.2.2</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,11 +66,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>4.2.2</version>
-        </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -59,7 +83,8 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
-            <scope>test</scope>
+<!--            fixme is the scope correct? test doesn't seem to work during build, and mvn test won't start IT -->
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -76,23 +101,7 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>test</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <spring.profiles.active>test</spring.profiles.active>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <spring.profiles.active>prod</spring.profiles.active>
-            </properties>
-        </profile>
-    </profiles>
+
 
     <build>
         <resources>

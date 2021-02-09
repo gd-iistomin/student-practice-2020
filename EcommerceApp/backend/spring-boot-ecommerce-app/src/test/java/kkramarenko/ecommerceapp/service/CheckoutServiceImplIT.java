@@ -1,5 +1,7 @@
 package kkramarenko.ecommerceapp.service;
 
+import kkramarenko.ecommerceapp.dto.Purchase;
+import kkramarenko.ecommerceapp.dto.PurchaseResponse;
 import kkramarenko.ecommerceapp.entity.Address;
 import kkramarenko.ecommerceapp.entity.Customer;
 import kkramarenko.ecommerceapp.entity.Order;
@@ -7,15 +9,23 @@ import kkramarenko.ecommerceapp.entity.OrderItem;
 import kkramarenko.ecommerceapp.repository.AddressRepository;
 import kkramarenko.ecommerceapp.repository.CustomerRepository;
 import kkramarenko.ecommerceapp.repository.UserRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 @SpringBootTest
+@ActiveProfiles("test")
 class CheckoutServiceImplIT {
 
     @Autowired
@@ -33,10 +43,15 @@ class CheckoutServiceImplIT {
     @Autowired
     CheckoutService checkoutService;
 
+    Customer customer;
+    OrderItem orderItem;
+    Order order;
+    Address address;
+    Purchase purchase;
 
-    @BeforeAll
-    void beforeAll(){
-        Customer customer = new Customer();
+    @BeforeEach
+    void setUp(){
+        customer = new Customer();
         customer.setId(1L);
         customer.setFirstName("John");
         customer.setLastName("Walker");
@@ -45,27 +60,50 @@ class CheckoutServiceImplIT {
 
         customerRepository.save(customer);
 
-        OrderItem orderItem = new OrderItem();
+        orderItem = new OrderItem();
         orderItem.setName("Test");
         orderItem.setImageUrl("cugvuyecguwvj");
-        orderItem.setUnitPrice(BigDecimal.ONE);
+        orderItem.setUnitPrice(BigDecimal.valueOf(120));
         orderItem.setQuantity(1);
         orderItem.setProductId(1L);
 
-        Order order = new Order();
+        order = new Order();
         order.setTotalQuantity(1);
         order.add(orderItem);
         order.setTotalPrice(BigDecimal.ONE);
 
-        Address address = new Address();
+        address = new Address();
+        address.setCountry("Russia");
+        address.setState("Moscow");
         address.setCity("Moscow");
+        address.setStreet("Lenina");
+        address.setZipCode("675426");
+
+        purchase = new Purchase();
+        purchase.setCustomer(customer);
+        purchase.setBillingAddress(address);
+        purchase.setShippingAddress(address);
+        purchase.setOrderItems(Set.of(orderItem));
+        purchase.setOrder(order);
     }
 
 
     @Test
     void placeOrder() {
-        
 
+        PurchaseResponse purchaseResponse = checkoutService.placeOrder(purchase);
+
+        assertThat(addressRepository.findAll()).hasSize(1);
+        assertFalse(purchaseResponse.isDiscountRateChanged());
+        assertEquals("", purchaseResponse.getNewDiscountRate());
+
+    }
+
+    @AfterEach
+    void tearDown() {
+        customerRepository.deleteAll();
+        addressRepository.deleteAll();
+        userRepository.deleteAll();
 
     }
 }
