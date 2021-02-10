@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Creating table "loyalty_program_status"    -->
+    <changeSet  id="create-loyalty-program-status"  author="kkramarenko">
+        <createTable  tableName="loyalty_program_status" schemaName="full-stack-ecommerce-liquibase">
+            <column  name="id"  type="int" autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="status_name"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="target_purchase_total"  type="decimal(13,2)">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

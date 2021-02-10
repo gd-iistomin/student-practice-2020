@@ -32,6 +32,14 @@
     <!-- Run changeset to load sample data to "users" table   -->
     <include file="datachangeset/populate-users.xml" relativeToChangelogFile="true"/>
 
+    <!-- Run changeset to create table "loyalty_program_status"   -->
+    <include file="sctructurechangeset/create-loyalty-program-statuses.xml" relativeToChangelogFile="true"/>
+
+    <!-- Run changeset to load statuses to table "loyalty_program_status"   -->
+    <include file="datachangeset/populate-loyalty-program-statuses.xml" relativeToChangelogFile="true"/>
+
+
+
     
 
 
