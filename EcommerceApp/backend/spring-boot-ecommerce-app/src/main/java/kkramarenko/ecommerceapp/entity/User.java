@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -43,11 +44,14 @@ public class User {
     @Column(name = "authority")
     private String authority;
 
-    @Column(name = "discount_rate")
-    private String discountRate;
-
     @OneToOne()
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
+
+    @Column(name = "discount_rate")
+    private String discountRate;
+
+    @Column(name = "purchase_total")
+    private BigDecimal purchaseTotal;
 
 }

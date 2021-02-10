@@ -16,6 +16,9 @@
             <column  name="email"  value="testuser@test.com"/>
             <column name="authority" value="ADMIN"/>
             <column name="discount_rate" value="starter"/>
+            <column name="authority" value="USER"/>
+            <column name="discount_rate" value="STARTER"/>
+            <column name="purchase_total" value="00.00"/>
             <column name="customer_id" value="1"/>
         </insert>
     </changeSet>
@@ -29,7 +32,8 @@
             <column  name="last_name"  value="Palmer"/>
             <column  name="email"  value="jpedmonton@yahoo.com"/>
             <column name="authority" value="USER"/>
-            <column name="discount_rate" value="starter"/>
+            <column name="discount_rate" value="STARTER"/>
+            <column name="purchase_total" value="00.00"/>
             <column name="customer_id" value="2"/>
         </insert>
     </changeSet>
@@ -43,7 +47,8 @@
             <column  name="last_name"  value="Parker"/>
             <column  name="email"  value="parker.richard@gmail.com"/>
             <column name="authority" value="USER"/>
-            <column name="discount_rate" value="starter"/>
+            <column name="discount_rate" value="STARTER"/>
+            <column name="purchase_total" value="00.00"/>
             <column name="customer_id" value="3"/>
         </insert>
     </changeSet>

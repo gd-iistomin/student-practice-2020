@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -44,6 +45,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserRegistrationStatus registerUser(User user) {
+        user.setPurchaseTotal(BigDecimal.ZERO);
+
         User userWithMatchingUsername = userRepository.findUserByUsername(user.getUsername());
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
 
