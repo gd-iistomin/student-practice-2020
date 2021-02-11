@@ -1,0 +1,30 @@
+<div class="adm-dashboard">
+    <div class="container-fluid">
+
+    <!-- Warnining for anauthorized visitors -->
+    <div *ngIf="!authenticated() || getAuthority() != 'ADMIN'">   
+      <div class="alert alert-danger">
+        <strong>Permission denied.</strong>
+      </div>
+    </div>
+
+    <!-- Admin dashboard -->
+    <div *ngIf="authenticated() && getAuthority() == 'ADMIN'">
+        <div>
+          <p>Admin Dashboard</p>
+          <a routerLink="/create-new-item">
+            <button class="btn btn-primary btn-sm mb-4">Add new Item</button>
+          </a>
+          <br>
+
+          <a routerLink="/disable-item">
+            <button class="btn btn-primary btn-sm mb-4">Disable Item</button>
+          </a>
+          <br>
+
+          <a routerLink="/enable-item">
+            <button class="btn btn-primary btn-sm mb-4">Enable Item</button>
+          </a>
+        </div>
+    </div>
+</div>        

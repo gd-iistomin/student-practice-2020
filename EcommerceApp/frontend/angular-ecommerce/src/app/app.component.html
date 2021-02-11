@@ -32,6 +32,10 @@
             <div [hidden]="authenticated()">
               <app-login-button></app-login-button>
             </div>
+
+            <div [hidden]="!authenticated() || getAuthority() != 'ADMIN'">
+              <app-admin-buttons></app-admin-buttons>
+            </div>
             
             <app-cart-status></app-cart-status>
 

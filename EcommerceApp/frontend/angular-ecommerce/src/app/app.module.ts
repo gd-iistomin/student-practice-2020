@@ -28,6 +28,11 @@ import { AuthenticationService } from './services/authentication.service';
 import { UserStatusComponent } from './components/user-status/user-status.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { UserOrdersListComponent } from './components/user-orders-list/user-orders-list.component';
+import { AdminButtonsComponent } from './components/admin-buttons/admin-buttons.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { ItemCreationComponent } from './components/item-creation/item-creation.component';
+import { ItemDisableComponent } from './components/item-disable/item-disable.component';
+import { ItemEnableComponent } from './components/item-enable/item-enable.component';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -41,6 +46,10 @@ export class XhrInterceptor implements HttpInterceptor {
 }
 
 const routes: Routes =[
+  {path: 'enable-item', component: ItemEnableComponent},
+  {path: 'disable-item', component: ItemDisableComponent},
+  {path: 'create-new-item', component: ItemCreationComponent},
+  {path: 'admin-dashboard', component: AdminDashboardComponent},
   {path: 'show-user-orders', component: UserOrdersListComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'login', component: LoginComponent},
@@ -72,7 +81,12 @@ const routes: Routes =[
     LoginButtonComponent,
     UserStatusComponent,
     SignUpComponent,
-    UserOrdersListComponent
+    UserOrdersListComponent,
+    AdminButtonsComponent,
+    AdminDashboardComponent,
+    ItemCreationComponent,
+    ItemDisableComponent,
+    ItemEnableComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

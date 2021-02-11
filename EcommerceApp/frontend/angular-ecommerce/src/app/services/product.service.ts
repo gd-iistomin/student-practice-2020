@@ -11,7 +11,9 @@ import { ProductCategory } from '../common/product-category';
 export class ProductService {
   
   private baseUrl = 'http://localhost:8000/api/products';
-  private categoryUrl = 'http://localhost:8000/api/product-category'
+  private categoryUrl = 'http://localhost:8000/api/product-category';
+
+  private pageMaxSize: number = 1000;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,10 +23,16 @@ export class ProductService {
     return this.httpClient.get<Product>(productUrl);
   }
 
+  createProduct(theProduct: Product): Observable<any>{
+    const productCreationUrl = 'http://localhost:8000/api/create-new-item';
+
+    return this.httpClient.post<Product>(productCreationUrl, theProduct);
+  }
+
   getProductListPaginate(thePage: number,
                         thePageSize: number,
                         theCategoryId: number): Observable<GetResponseProducts>{
-    const listProductsByCategoryPaginationUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}&page=${thePage}&size=${thePageSize}`
+    const listProductsByCategoryPaginationUrl = `${this.baseUrl}/search/findByCategoryIdAndActiveIsTrue?id=${theCategoryId}&page=${thePage}&size=${thePageSize}`
     
     return this.httpClient.get<GetResponseProducts>(listProductsByCategoryPaginationUrl);
   }
@@ -37,10 +45,30 @@ export class ProductService {
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
+  
   getProductList(categoryId: number): Observable<Product[]>{
-    const listProductsByCategoryUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`
+    // size set to maxsize(1000) to get all products of category
+    // (if not set explicitly, size defaults to 20, say we have 90 products, then 
+    // without specifying size this method will get only 20 items(from first page))
+    const listProductsByCategoryUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}&size=${this.pageMaxSize}`
     
     return this.getProducts(listProductsByCategoryUrl);
+  }
+
+  getEnabledProducts(categoryId: number): Observable<Product[]>{
+    // size set to maxsize(1000) to get all enabled products
+    const listActiveProductsByCategoryUrl = `${this.baseUrl}/search/findByCategoryIdAndActiveIsTrue?id=${categoryId}
+                                                                                    &size=${this.pageMaxSize}`;
+    
+    return this.getProducts(listActiveProductsByCategoryUrl);
+  }
+
+  getDisabledProducts(categoryId: number): Observable<Product[]>{
+    // size set to maxsize(1000) to get all disabled products
+    const listInactiveProductsByCategoryUrl = `${this.baseUrl}/search/findByCategoryIdAndActiveIsFalse?id=${categoryId}
+                                                                                    &size=${this.pageMaxSize}`;
+    
+    return this.getProducts(listInactiveProductsByCategoryUrl);
   }
 
   getProducts(Url: string): Observable<Product[]>{
