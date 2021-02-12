@@ -4,13 +4,14 @@ import kkramarenko.ecommerceapp.dto.Purchase;
 import kkramarenko.ecommerceapp.dto.PurchaseResponse;
 import kkramarenko.ecommerceapp.entity.Address;
 import kkramarenko.ecommerceapp.entity.Customer;
+import kkramarenko.ecommerceapp.entity.LoyaltyProgramStatus;
 import kkramarenko.ecommerceapp.entity.Order;
 import kkramarenko.ecommerceapp.entity.OrderItem;
 import kkramarenko.ecommerceapp.entity.User;
-import kkramarenko.ecommerceapp.enums.DiscountRate;
 import kkramarenko.ecommerceapp.enums.OrderStatus;
 import kkramarenko.ecommerceapp.repository.AddressRepository;
 import kkramarenko.ecommerceapp.repository.CustomerRepository;
+import kkramarenko.ecommerceapp.repository.LoyaltyProgramStatusRepository;
 import kkramarenko.ecommerceapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +28,19 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     private final UserRepository userRepository;
 
+    private final LoyaltyProgramStatusRepository loyaltyProgramStatusRepository;
+
     private final LoyaltyProgramService loyaltyProgramService;
 
-    public CheckoutServiceImpl(CustomerRepository customerRepository, AddressRepository addressRepository,
-                               UserRepository userRepository, LoyaltyProgramService loyaltyProgramService) {
+    public CheckoutServiceImpl(CustomerRepository customerRepository,
+                               AddressRepository addressRepository,
+                               UserRepository userRepository,
+                               LoyaltyProgramStatusRepository loyaltyProgramStatusRepository,
+                               LoyaltyProgramService loyaltyProgramService) {
         this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
         this.userRepository = userRepository;
+        this.loyaltyProgramStatusRepository = loyaltyProgramStatusRepository;
         this.loyaltyProgramService = loyaltyProgramService;
     }
 
@@ -51,7 +58,8 @@ public class CheckoutServiceImpl implements CheckoutService {
      * <p>
      * <p>
      * returns response with generated tracking number, flag if discount rate has changed, and new discount rate
-     * discount rate is represented by String value of enum, if present, or empty string '' otherwise
+     * discount rate is represented by status_name of LoyaltyProgramStatus
+     * @see LoyaltyProgramStatus
      */
     @Override
     @Transactional
@@ -89,15 +97,18 @@ public class CheckoutServiceImpl implements CheckoutService {
                 existingCustomer.add(order);
                 customerRepository.save(existingCustomer);
             } else {
-                DiscountRate discountRateBeforePurchase = DiscountRate.valueOf(userWithGivenCustomer.getDiscountRate());
+                LoyaltyProgramStatus statusBeforePurchase =
+                        loyaltyProgramStatusRepository.getByStatusName(userWithGivenCustomer.getDiscountRate());
+                userWithGivenCustomer.setPurchaseTotal(
+                        userWithGivenCustomer.getPurchaseTotal().add(order.getTotalPrice()));
                 existingCustomer.add(order);
                 customerRepository.save(existingCustomer);
-                DiscountRate discountRateAfterPurchase =
-                        loyaltyProgramService.getCustomerCurrentDiscountRate(existingCustomer);
-                if (!(discountRateAfterPurchase.equals(discountRateBeforePurchase))) {
+                LoyaltyProgramStatus statusAfterPurchase =
+                        loyaltyProgramService.getUserCurrentDiscountRate(userWithGivenCustomer);
+                if (!(statusAfterPurchase.equals(statusBeforePurchase))) {
                     discountRateChanged = true;
-                    newDiscountRate = discountRateAfterPurchase.toString();
-                    userWithGivenCustomer.setDiscountRate(discountRateAfterPurchase.toString());
+                    newDiscountRate = statusAfterPurchase.getStatusName();
+                    userWithGivenCustomer.setDiscountRate(newDiscountRate);
                 }
             }
         } else {

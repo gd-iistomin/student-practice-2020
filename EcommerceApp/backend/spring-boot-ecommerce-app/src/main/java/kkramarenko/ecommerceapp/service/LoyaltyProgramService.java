@@ -1,9 +1,9 @@
 package kkramarenko.ecommerceapp.service;
 
-import kkramarenko.ecommerceapp.entity.Customer;
-import kkramarenko.ecommerceapp.enums.DiscountRate;
+import kkramarenko.ecommerceapp.entity.LoyaltyProgramStatus;
+import kkramarenko.ecommerceapp.entity.User;
 
 public interface LoyaltyProgramService {
 
-    DiscountRate getCustomerCurrentDiscountRate(Customer customer);
+    LoyaltyProgramStatus getUserCurrentDiscountRate(User user);
 }

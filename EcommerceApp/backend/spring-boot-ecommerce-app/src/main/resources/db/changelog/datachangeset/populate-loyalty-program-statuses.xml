@@ -1,0 +1,45 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Populate "loyalty_program_status" table with data  -->
+
+    <changeSet id="loyalty-program-status-STARTER" author="kkramarenko">
+        <insert tableName="loyalty_program_status" schemaName="full-stack-ecommerce-liquibase">
+            <column name="status_name" value="STARTER"/>
+            <column name="target_purchase_total" value="00.00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="loyalty-program-status-BRONZE" author="kkramarenko">
+        <insert tableName="loyalty_program_status" schemaName="full-stack-ecommerce-liquibase">
+            <column name="status_name" value="BRONZE"/>
+            <column name="target_purchase_total" value="100.00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="loyalty-program-status-SILVER" author="kkramarenko">
+        <insert tableName="loyalty_program_status" schemaName="full-stack-ecommerce-liquibase">
+            <column name="status_name" value="SILVER"/>
+            <column name="target_purchase_total" value="250.00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="loyalty-program-status-GOLD" author="kkramarenko">
+        <insert tableName="loyalty_program_status" schemaName="full-stack-ecommerce-liquibase">
+            <column name="status_name" value="GOLD"/>
+            <column name="target_purchase_total" value="500.00"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="loyalty-program-status-PLATINUM" author="kkramarenko">
+        <insert tableName="loyalty_program_status" schemaName="full-stack-ecommerce-liquibase">
+            <column name="status_name" value="PLATINUM"/>
+            <column name="target_purchase_total" value="1000.00"/>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

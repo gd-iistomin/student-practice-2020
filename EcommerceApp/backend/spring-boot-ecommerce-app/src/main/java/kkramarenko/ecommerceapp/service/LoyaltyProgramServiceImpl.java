@@ -1,58 +1,68 @@
 package kkramarenko.ecommerceapp.service;
 
-import kkramarenko.ecommerceapp.entity.Customer;
-import kkramarenko.ecommerceapp.entity.Order;
-import kkramarenko.ecommerceapp.enums.DiscountRate;
-import kkramarenko.ecommerceapp.repository.OrderRepository;
+import kkramarenko.ecommerceapp.entity.LoyaltyProgramStatus;
+import kkramarenko.ecommerceapp.entity.User;
+import kkramarenko.ecommerceapp.repository.LoyaltyProgramStatusRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LoyaltyProgramServiceImpl implements LoyaltyProgramService {
 
-    private final OrderRepository orderRepository;
 
-    public LoyaltyProgramServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    private final LoyaltyProgramStatusRepository loyaltyProgramStatusRepository;
+
+
+    public LoyaltyProgramServiceImpl(LoyaltyProgramStatusRepository loyaltyProgramStatusRepository) {
+        this.loyaltyProgramStatusRepository = loyaltyProgramStatusRepository;
     }
 
     /**
-     * Used after new purchase for some customer is saved to database
+     * Used after new purchase for some user is saved to database
      * <p>
-     * Checks if sum of all customer orders' totalPrice is more than some value,
-     * return customer's current discount rate based on that
+     * Checks if sum of all user orders' totalPrice is more than some value,
+     * return user's current loyalty program status based on that
      *
-     * @param customer - customer to check discount rate
-     * @return DiscountRate
-     * @see DiscountRate
+     * @param user - user to check discount rate
+     * @return LoyaltyProgramStatus
+     * @see LoyaltyProgramStatus
      */
     @Override
-    public DiscountRate getCustomerCurrentDiscountRate(Customer customer) {
+    public LoyaltyProgramStatus getUserCurrentDiscountRate(User user) {
 
-        List<Order> customerOrders = orderRepository.findOrdersByCustomer(customer);
 
-        if (customerOrders.isEmpty()) {
-            return DiscountRate.STARTER;
+        BigDecimal userPurchaseTotal = user.getPurchaseTotal();
+        String discountRate = user.getDiscountRate();
+
+        List<LoyaltyProgramStatus> loyaltyProgramStatuses = loyaltyProgramStatusRepository.findAll()
+                .stream().sorted(Comparator.comparing(LoyaltyProgramStatus::getTargetPurchaseTotal))
+                .collect(Collectors.toList());
+
+
+
+        for (LoyaltyProgramStatus status : loyaltyProgramStatuses) {
+            if (userPurchaseTotal.compareTo(status.getTargetPurchaseTotal()) > 0) {
+                discountRate = status.getStatusName();
+            }
         }
 
-        BigDecimal customerOrdersTotalPriceSum = new BigDecimal("0.00");
-        for (Order order : customerOrders) {
-            customerOrdersTotalPriceSum = customerOrdersTotalPriceSum.add(order.getTotalPrice());
-        }
+        return loyaltyProgramStatusRepository.getByStatusName(discountRate);
 
-        if (customerOrdersTotalPriceSum.compareTo(DiscountRate.BRONZE.getTargetPurchasesSum()) < 0) {
-            return DiscountRate.STARTER;
-        } else if (customerOrdersTotalPriceSum.compareTo(DiscountRate.SILVER.getTargetPurchasesSum()) < 0) {
-            return DiscountRate.BRONZE;
-        } else if (customerOrdersTotalPriceSum.compareTo(DiscountRate.GOLD.getTargetPurchasesSum()) < 0) {
-            return DiscountRate.SILVER;
-        } else if (customerOrdersTotalPriceSum.compareTo(DiscountRate.PLATINUM.getTargetPurchasesSum()) < 0) {
-            return DiscountRate.GOLD;
-        } else {
-            return DiscountRate.PLATINUM;
-        }
+//        if (purchaseTotal.compareTo(DiscountRate.BRONZE.getTargetPurchasesSum()) < 0) {
+//            return DiscountRate.STARTER;
+//        } else if (purchaseTotal.compareTo(DiscountRate.SILVER.getTargetPurchasesSum()) < 0) {
+//            return DiscountRate.BRONZE;
+//        } else if (purchaseTotal.compareTo(DiscountRate.GOLD.getTargetPurchasesSum()) < 0) {
+//            return DiscountRate.SILVER;
+//        } else if (purchaseTotal.compareTo(DiscountRate.PLATINUM.getTargetPurchasesSum()) < 0) {
+//            return DiscountRate.GOLD;
+//        } else {
+//            return DiscountRate.PLATINUM;
+//        }
 
     }
 }

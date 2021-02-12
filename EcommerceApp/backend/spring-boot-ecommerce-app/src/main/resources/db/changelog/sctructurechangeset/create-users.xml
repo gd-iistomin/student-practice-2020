@@ -28,10 +28,11 @@
                 <column  name="authority"  type="varchar(30)">
                     <constraints  nullable="false"/>
                 </column>
-                <column  name="discount_rate"  type="varchar(35)"/>
                 <column name="customer_id"  type="bigint">
                     <constraints nullable="false" foreignKeyName="fk_user_customer" references="customer(id)"/>
                 </column>
+                <column  name="discount_rate"  type="varchar(35)"/>
+                <column name="purchase_total" type="decimal(13,2)"/>
             </createTable>
         </changeSet>
 </databaseChangeLog>
