@@ -2,7 +2,6 @@ package kkramarenko.ecommerceapp.service;
 
 import kkramarenko.ecommerceapp.entity.Customer;
 import kkramarenko.ecommerceapp.entity.User;
-import kkramarenko.ecommerceapp.enums.DiscountRate;
 import kkramarenko.ecommerceapp.enums.UserRegistrationStatus;
 import kkramarenko.ecommerceapp.repository.CustomerRepository;
 import kkramarenko.ecommerceapp.repository.UserRepository;
@@ -10,11 +9,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -44,8 +48,12 @@ class UserServiceImplTest {
 
     User user2;
 
+    private final static String DISCOUNT_RATE_BRONZE = "BRONZE";
+    private final static String DISCOUNT_RATE_SILVER = "SILVER";
+
     @BeforeEach
     void setUp() {
+
         user1 = new User();
         user1.setId(3);
         user1.setFirstName("Jack");
@@ -54,7 +62,7 @@ class UserServiceImplTest {
         user1.setUsername("test1");
         user1.setPassword("bchbYGY65r");
         user1.setAuthority("USER");
-        user1.setDiscountRate(DiscountRate.BRONZE.toString());
+        user1.setDiscountRate(DISCOUNT_RATE_BRONZE);
 
 
         user2 = new User();
@@ -65,7 +73,7 @@ class UserServiceImplTest {
         user2.setUsername("hjvcv");
         user2.setPassword("bHVJC$24");
         user2.setAuthority("USER");
-        user2.setDiscountRate(DiscountRate.SILVER.toString());
+        user2.setDiscountRate(DISCOUNT_RATE_SILVER);
 
     }
 
