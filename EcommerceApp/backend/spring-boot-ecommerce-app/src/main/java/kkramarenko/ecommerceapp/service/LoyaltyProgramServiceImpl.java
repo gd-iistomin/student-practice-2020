@@ -52,17 +52,6 @@ public class LoyaltyProgramServiceImpl implements LoyaltyProgramService {
 
         return loyaltyProgramStatusRepository.getByStatusName(discountRate);
 
-//        if (purchaseTotal.compareTo(DiscountRate.BRONZE.getTargetPurchasesSum()) < 0) {
-//            return DiscountRate.STARTER;
-//        } else if (purchaseTotal.compareTo(DiscountRate.SILVER.getTargetPurchasesSum()) < 0) {
-//            return DiscountRate.BRONZE;
-//        } else if (purchaseTotal.compareTo(DiscountRate.GOLD.getTargetPurchasesSum()) < 0) {
-//            return DiscountRate.SILVER;
-//        } else if (purchaseTotal.compareTo(DiscountRate.PLATINUM.getTargetPurchasesSum()) < 0) {
-//            return DiscountRate.GOLD;
-//        } else {
-//            return DiscountRate.PLATINUM;
-//        }
 
     }
 }
