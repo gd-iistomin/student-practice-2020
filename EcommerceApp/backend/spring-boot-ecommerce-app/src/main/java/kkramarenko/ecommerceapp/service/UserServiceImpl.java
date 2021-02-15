@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
         User userWithMatchingUsername = userRepository.findUserByUsername(user.getUsername());
         User userWithMatchingEmail = userRepository.findUserByEmail(user.getEmail());
 
-
         if (userWithMatchingUsername != null) {
             return UserRegistrationStatus.FOUND_USER_WITH_MATCHING_USERNAME;
         }
