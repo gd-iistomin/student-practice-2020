@@ -184,14 +184,14 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.placeOrder(purchase).subscribe({ 
         next: response => {
 
-            alert(`Your order has been received.\nOreder tracking number: ${response.orderTrackingNumber}`);
+            alert(`Your order has been received.\nOreder tracking number: ${response.orderTrackingNumber}\n`);
             if (response.discountRateChanged == true){
               let offPercentMap = new Map<string, number>();
-              offPercentMap.set("starter", 0);
-              offPercentMap.set("bronze", 3);
-              offPercentMap.set("silver", 5);
-              offPercentMap.set("gold", 7);
-              offPercentMap.set("platinum", 10);
+              offPercentMap.set("STARTER", 0);
+              offPercentMap.set("BRONZE", 3);
+              offPercentMap.set("SILVER", 5);
+              offPercentMap.set("GOLD", 7);
+              offPercentMap.set("PLATINUM", 10);
               let newDiscountRate: string = response.newDiscountRate;
               let offPercent: number = offPercentMap.get(newDiscountRate)
               alert(`Your discount rate has changed! New discount rate is ${newDiscountRate}.

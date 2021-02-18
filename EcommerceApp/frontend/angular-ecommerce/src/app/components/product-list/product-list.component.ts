@@ -38,11 +38,11 @@ export class ProductListComponent implements OnInit {
     //get off percent if user is logged in
     if(this.authenticated()){
       let offPercentMap = new Map<string, number>();
-      offPercentMap.set("starter", 0);
-      offPercentMap.set("bronze", 3);
-      offPercentMap.set("silver", 5);
-      offPercentMap.set("gold", 7);
-      offPercentMap.set("platinum", 10);
+      offPercentMap.set("STARTER", 0);
+      offPercentMap.set("BRONZE", 3);
+      offPercentMap.set("SILVER", 5);
+      offPercentMap.set("GOLD", 7);
+      offPercentMap.set("PLATINUM", 10);
       this.authenticationService.userDetails.subscribe(data => {
         this.offPercent = offPercentMap.get(data.discountRate)
       });
